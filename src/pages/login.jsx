@@ -16,7 +16,7 @@ function LoginForm() {
                 const res = await fetch('http://localhost:3001/users')
                 const data = await res.json()
                 setUsers(data)
-                console.log(data)
+                
             } catch (error) {
                 console.log(error.message)
             }
