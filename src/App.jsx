@@ -1,18 +1,25 @@
 
-import LoginForm from './pages/Login'
-import Home from './pages/Home' 
+import LoginForm from './pages/Login.jsx'
+import Home from './pages/Home.jsx' 
 import { AuthProvider } from './contexts/authContext';
-
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <AuthProvider>
-    <BrowserRouter>
+        <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginForm />} />
-        <Route path="/home" element={<Home />} />
-        
+      
+         <Route element={<PublicRoute />}>
+          <Route path="/" element={<LoginForm />} />
+        </Route>
+
+    
+        <Route element={<PrivateRoute />}>
+          <Route path="/home" element={<Home />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </AuthProvider>

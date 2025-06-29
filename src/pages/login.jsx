@@ -16,7 +16,7 @@ function LoginForm() {
                 const res = await fetch('http://localhost:3001/users')
                 const data = await res.json()
                 setUsers(data)
-                console.log(data)
+                
             } catch (error) {
                 console.log(error.message)
             }
@@ -30,7 +30,7 @@ function LoginForm() {
         if (nickname.trim() && users.length > 0) {
       const exists = users.some((u) => u.nickName === nickname.trim());
       if (!exists) newErrors.nickname = "El usuario no existe";
-      console.log
+          console.log("Usuario existe:", exists)
     }
     if (!password) newErrors.password = "La contraseña es obligatoria";
     else if (password !== "123456") newErrors.password = "Contraseña incorrecta";
