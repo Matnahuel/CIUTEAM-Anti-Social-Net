@@ -1,6 +1,6 @@
 
-import LoginForm from './pages/login'
-import Home from './pages/home' 
+import LoginForm from './pages/Login'
+import Home from './pages/Home' 
 import { AuthProvider } from './contexts/authContext';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
