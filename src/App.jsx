@@ -5,6 +5,7 @@ import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CrearPost from './pages/crearPost.jsx'; // ¡Esto es importante! ✔
+import Profile from './pages/perfil.jsx'
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/crear-post" element={<CrearPost />} />
-            {/* Cuando Alan haga perfil, agregar: <Route path="/perfil" element={<Perfil />} /> */}
+            <Route path="/perfil" element={<Profile />} />
           </Route>
 
         </Routes>
