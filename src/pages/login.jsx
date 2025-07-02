@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
-function LoginForm() {
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Link } from "react-router-dom";
+export default function Login() {
     const [nickname, setNickname] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
@@ -51,34 +53,58 @@ function LoginForm() {
     }
   }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Nickname</label>
-        <input
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-          autoComplete="username"
-        />
-        {errors.nickname && <small>{errors.nickname}</small>}
-      </div>
+return (
+  <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+    <div className="card shadow p-4 w-100" style={{ maxWidth: 480 }}>
+      <h1 className="h4 text-center mb-4 text-secondary fw-semibold">
+        Iniciar Sesión
+      </h1>
 
-      <div>
-        <label>Contraseña</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="current-password"
-        />
-        {errors.password && <small>{errors.password}</small>}
-      </div>
+      <form onSubmit={handleSubmit} noValidate>
+        <div className="mb-3">
+          <label className="form-label">Nickname</label>
+          <input
+            className={`form-control ${errors.nickname && "is-invalid"}`}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            autoComplete="username"
+            placeholder="Tu nick"
+          />
+          {errors.nickname && (
+            <div className="invalid-feedback">{errors.nickname}</div>
+          )}
+        </div>
 
-      <button type="submit">Ingresar</button>
+        <div className="mb-3">
+          <label className="form-label">Contraseña</label>
+          <input
+            type="password"
+            className={`form-control ${errors.password && "is-invalid"}`}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            placeholder="••••••••"
+          />
+          {errors.password && (
+            <div className="invalid-feedback">{errors.password}</div>
+          )}
+        </div>
 
-      {message && <p>{message}</p>}
-    </form>
-  );
-}
+        <button type="submit" className="btn btn-dark w-100">
+          Ingresar
+        </button>
 
-export default LoginForm;
+        {message && (
+          <div className="alert alert-warning mt-3 py-2">{message}</div>
+        )}
+      </form>
+
+
+      <p className="mt-3 text-center">
+        ¿No tenés cuenta?{" "}
+        <Link to="/register" className="text-decoration-none fw-semibold">Registrate</Link>
+      </p>
+    </div>
+  </div>
+);
+};

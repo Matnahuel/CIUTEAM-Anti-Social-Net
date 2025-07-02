@@ -1,0 +1,67 @@
+.signup-form-wrapper {
+  max-width: 320px;
+  margin: 4rem auto;
+  background-color: #f8f9fa; 
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+
+
+.signup-form-wrapper h2 {
+  color: #343a40;  
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.signup-form-wrapper label {
+  color: #6c757d;  
+  margin-top: 0.75rem;
+}
+
+.signup-form-wrapper small {
+  color: #dc3545;  
+}
+
+.signup-form-wrapper p {
+  color: #6c757d;
+  margin-top: 1rem;
+}
+
+
+.signup-form-wrapper input {
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+
+.signup-form-wrapper button {
+  width: 100%;
+  background-color: #343a40;
+  border-color: #343a40;
+  font-weight: 600;
+}
+
+.signup-form-wrapper button:hover {
+  background-color: #1d1f22;
+  border-color: #1d1f22;
+}
+.text-gray-600 { color: #6c757d; }
+.text-gray-700 { color: #495057; }
+.text-gray-800 { color: #343a40; }
+
+/* Tarjeta centrada */
+.signup-card {
+  width: 100%;
+  max-width: 380px;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+/* Botón dark hover sutil */
+.btn-dark:hover {
+  background-color: #1f2124;
+  border-color: #1f2124;
+}

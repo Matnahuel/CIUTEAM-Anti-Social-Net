@@ -8,9 +8,9 @@ function Footer() {
       <div className="footer-container">
         <p>&copy; {new Date().getFullYear()} UnaHur Anti-Social Net. Todos los derechos reservados.</p>
         <nav className="utility-links"> {}
-          <a href="/privacidad">Privacidad</a>
-          <a href="/terminos">Términos</a>
-          <a href="/contacto">Contacto</a>
+          <a href="https://github.com/IRojas99/CIUTEAM-Anti-Social-Net">Privacidad</a>
+          <a href="https://github.com/IRojas99/CIUTEAM-Anti-Social-Net">Términos</a>
+          <a href="https://github.com/IRojas99/CIUTEAM-Anti-Social-Net">Contacto</a>
         </nav>
       </div>
     </footer>

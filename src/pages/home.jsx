@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useAuth } from '../contexts/authContext';
 import { Link } from 'react-router-dom'; 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -38,10 +39,11 @@ const examplePosts = [
 ];
 
 function Home() {
+  const {logout} = useAuth()
   return (
     <div className="home-general-container">
-      <Header />
-
+     
+         <button onClick={logout}>aca</button>
       <main className="home-main-content">
         {/* Banner de bienvenida */}
         <section className="welcome-section">
@@ -86,7 +88,7 @@ function Home() {
         </section>
       </main>
 
-      <Footer />
+    
        </div>
   );
 }

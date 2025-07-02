@@ -82,7 +82,6 @@ function CrearPost() {
 
   return (
     <div className="home-general-container">
-      <Header />
       <main className="home-main-content">
         <h2>Crear nueva publicación</h2>
         <form onSubmit={handleSubmit} style={{ textAlign: 'left' }}>
@@ -131,7 +130,6 @@ function CrearPost() {
           <button type="submit" className="create-post-link" style={{ marginTop: '15px' }}>Publicar</button>
         </form>
       </main>
-      <Footer />
     </div>
   );
 }

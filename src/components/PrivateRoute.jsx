@@ -5,7 +5,7 @@ export default function PrivateRoute() {
   const { usuario, cargando } = useAuth();
   const location = useLocation();
 
-  if (cargando) return <p>Cargando...</p>;  // O un spinner, pero NO null
+  if (cargando) return <p>Cargando...</p>; 
 
   if (!usuario) return <Navigate to="/" state={{ from: location }} replace />;
 
