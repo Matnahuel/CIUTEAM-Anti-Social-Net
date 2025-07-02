@@ -1,0 +1,5 @@
+Login y registro - Ivan
+Home - Magui
+Detalle de publicacion - Caro
+Crear nuevas publicaciones - Mati 
+Perfil de usuario + Logout - Alan
