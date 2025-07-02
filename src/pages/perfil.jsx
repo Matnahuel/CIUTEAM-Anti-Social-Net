@@ -11,7 +11,6 @@ export default function Profile() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-
   useEffect(() => {
     if (!cargando && usuario?.id) {
       fetch(`http://localhost:3001/posts?userId=${usuario.id}`)
@@ -61,6 +60,28 @@ export default function Profile() {
               {publicaciones.map((post) => (
                 <div key={post.id} className="post-card">
                   <p className="post-description">{post.description}</p>
+                  
+                  {post.PostImages && post.PostImages.length > 0 && (
+                    <div className="post-images" style={{ marginBottom: "1rem" }}>
+                      {post.PostImages.map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img.url}
+                          alt={`Imagen ${idx + 1}`}
+                          style={{ width: "100%", borderRadius: "5px", marginBottom: "8px" }}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {post.Tags && post.Tags.length > 0 && (
+                    <div className="post-tags" style={{ marginTop: "0.5rem" }}>
+                      {post.Tags.map((tag, idx) => (
+                        <span key={idx} className="post-tag">#{tag.name}</span>
+                      ))}
+                    </div>
+                  )}
+
                   <button 
                     className="view-post-button"
                     onClick={() => navigate(`/post/${post.id}`)}

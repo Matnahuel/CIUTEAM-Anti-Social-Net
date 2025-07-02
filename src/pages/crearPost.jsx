@@ -53,7 +53,7 @@ function CrearPost() {
         body: JSON.stringify({
           description,
           userId: usuario.id,
-          tags: selectedTags,
+          tagIds: selectedTags,
         }),
       });
       const post = await res.json();
@@ -118,11 +118,13 @@ function CrearPost() {
             <select
               multiple
               value={selectedTags}
-              onChange={(e) => setSelectedTags(Array.from(e.target.selectedOptions, opt => opt.value))}
+              onChange={(e) =>
+                setSelectedTags(Array.from(e.target.selectedOptions, opt => Number(opt.value)))
+              }
               style={{ width: '100%', height: '120px' }}
             >
               {tags.map((tag) => (
-                <option key={tag.id} value={tag.name}>{tag.name}</option>
+                <option key={tag.id} value={tag.id}>{tag.name}</option>
               ))}
             </select>
           </div>
