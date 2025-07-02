@@ -43,7 +43,7 @@ function Home() {
   return (
     <div className="home-general-container">
      
-         <button onClick={logout}>aca</button>
+       
       <main className="home-main-content">
         {/* Banner de bienvenida */}
         <section className="welcome-section">
