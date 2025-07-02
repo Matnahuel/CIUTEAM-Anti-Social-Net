@@ -16,7 +16,17 @@ export default function Profile() {
           if (!res.ok) throw new Error("Error al cargar publicaciones");
           return res.json();
         })
-        .then(setPublicaciones)
+        .then(async (posts) => {
+          // 🔥 Para cada post, traer sus imágenes
+          const postsConImagenes = await Promise.all(
+            posts.map(async (post) => {
+              const resImg = await fetch(`http://localhost:3001/postimages/post/${post.id}`);
+              const images = await resImg.json();
+              return { ...post, PostImages: images };
+            })
+          );
+          setPublicaciones(postsConImagenes);
+        })
         .catch((err) => setError(err.message));
     }
   }, [usuario, cargando]);
