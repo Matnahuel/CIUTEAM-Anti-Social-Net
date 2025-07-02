@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { useAuth } from '../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +11,6 @@ function CrearPost() {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
-  // Traer etiquetas desde la API
   useEffect(() => {
     fetch('http://localhost:3001/tags')
       .then(res => res.json())
@@ -46,7 +43,6 @@ function CrearPost() {
     }
 
     try {
-      // Crear post
       const res = await fetch('http://localhost:3001/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -58,7 +54,6 @@ function CrearPost() {
       });
       const post = await res.json();
 
-      // Asociar imágenes
       for (const url of imageUrls) {
         if (url.trim()) {
           await fetch('http://localhost:3001/postimages', {
@@ -73,7 +68,7 @@ function CrearPost() {
       }
 
       alert("¡Publicación creada con éxito!");
-      navigate('/perfil'); // Redirigir al perfil
+      navigate('/perfil');
     } catch (err) {
       console.error("Error al crear publicación", err);
       alert("Error al crear la publicación");

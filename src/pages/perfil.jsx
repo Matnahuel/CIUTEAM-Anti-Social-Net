@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import "./perfil.css"; 
+import "./perfil.css";
 
 export default function Profile() {
   const { usuario, logout, cargando } = useAuth();
@@ -23,27 +21,28 @@ export default function Profile() {
     }
   }, [usuario, cargando]);
 
-  if (cargando) return (
-    <div className="profile-page">
-      <Header />
-      <main className="loading-section">
-        <p>Cargando perfil...</p>
-      </main>
-      <Footer />
-    </div>
-  );
+  if (cargando)
+    return (
+      <div className="profile-page">
+        <main className="loading-section">
+          <p>Cargando perfil...</p>
+        </main>
+      </div>
+    );
 
   if (!usuario) return null;
 
   return (
     <div className="profile-page">
-      <Header />
       <main>
         <section className="user-section">
           <h2>Hola, {usuario.nickName}!</h2>
-          <button 
+          <button
             className="logout-button"
-            onClick={() => { logout(); navigate("/"); }}
+            onClick={() => {
+              logout();
+              navigate("/");
+            }}
           >
             Cerrar sesión
           </button>
@@ -52,7 +51,7 @@ export default function Profile() {
         <section className="posts-section">
           <h3>Tus publicaciones</h3>
           {error && <p className="error">{error}</p>}
-          
+
           {publicaciones.length === 0 ? (
             <p className="no-posts-message">No hay publicaciones aún.</p>
           ) : (
@@ -60,7 +59,7 @@ export default function Profile() {
               {publicaciones.map((post) => (
                 <div key={post.id} className="post-card">
                   <p className="post-description">{post.description}</p>
-                  
+
                   {post.PostImages && post.PostImages.length > 0 && (
                     <div className="post-images" style={{ marginBottom: "1rem" }}>
                       {post.PostImages.map((img, idx) => (
@@ -74,15 +73,7 @@ export default function Profile() {
                     </div>
                   )}
 
-                  {post.Tags && post.Tags.length > 0 && (
-                    <div className="post-tags" style={{ marginTop: "0.5rem" }}>
-                      {post.Tags.map((tag, idx) => (
-                        <span key={idx} className="post-tag">#{tag.name}</span>
-                      ))}
-                    </div>
-                  )}
-
-                  <button 
+                  <button
                     className="view-post-button"
                     onClick={() => navigate(`/post/${post.id}`)}
                   >
@@ -94,7 +85,6 @@ export default function Profile() {
           )}
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

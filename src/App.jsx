@@ -15,30 +15,30 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <AuthProvider>
-    
-        <BrowserRouter>
-         <div className="d-flex flex-column min-vh-100">
-       <Header />
-    <main className="flex-grow-1 d-flex flex-column align-items-center">
-  <Routes>
-    <Route element={<PublicRoute />}>
-      <Route path="/" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      
-    </Route>
 
-    <Route element={<PrivateRoute />}>
-      <Route path="/home" element={<Home />} />
-       <Route path="/crear-post" element={<CrearPost />} />
-      <Route path="/perfil" element={<Profile />} />
-    </Route>
-  </Routes>
-</main>
-    <Footer/>
-    </div>
-    </BrowserRouter>
-   
-  </AuthProvider>
+      <BrowserRouter>
+        <div className="d-flex flex-column min-vh-100">
+          <Header />
+          <main className="flex-grow-1 d-flex flex-column align-items-center">
+            <Routes>
+              <Route element={<PublicRoute />}>
+                <Route path="/" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
+              </Route>
+
+              <Route element={<PrivateRoute />}>
+                <Route path="/home" element={<Home />} />
+                <Route path="/crear-post" element={<CrearPost />} />
+                <Route path="/perfil" element={<Profile />} />
+              </Route>
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </BrowserRouter>
+
+    </AuthProvider>
   );
 }
 
