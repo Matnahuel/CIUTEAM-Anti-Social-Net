@@ -8,13 +8,13 @@ export function AuthProvider({ children }) {
 
 
   useEffect(() => {
-    const stored = localStorage.getItem("usuario");
+    const stored = sessionStorage.getItem("usuario");
     if (stored) {
       try {
         setUsuario(JSON.parse(stored));     
       } catch (err) {
         console.error("Usuario corrupto en storage:", err);
-        localStorage.removeItem("usuario"); 
+        sessionStorage.removeItem("usuario"); 
       }
     }
     setCargando(false);
@@ -23,13 +23,13 @@ export function AuthProvider({ children }) {
 
   const login = (user) => {
     setUsuario(user);
-    localStorage.setItem("usuario", JSON.stringify(user));
+    sessionStorage.setItem("usuario", JSON.stringify(user));
   };
 
 
   const logout = () => {
     setUsuario(null);
-    localStorage.removeItem("usuario");
+    sessionStorage.removeItem("usuario");
   };
 
   return (

@@ -11,7 +11,7 @@ function Header() {
      <header className="main-header">
       <div className="header-container">
         <Link to="/home" className="app-logo">
-          UnaHur Anti‑Social Net
+         UnaHur Anti‑Social Net
         </Link>
 
         <nav className="main-nav">
