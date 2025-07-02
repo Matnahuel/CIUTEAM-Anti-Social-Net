@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import "./perfil.css"; // Importamos los estilos específicos
+import "./perfil.css"; 
 
 export default function Profile() {
   const { usuario, logout, cargando } = useAuth();
@@ -11,10 +11,10 @@ export default function Profile() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Obtener publicaciones del usuario
+
   useEffect(() => {
     if (!cargando && usuario?.id) {
-      fetch(`http://localhost:3000/posts?userId=${usuario.id}`)
+      fetch(`http://localhost:3001/posts?userId=${usuario.id}`)
         .then((res) => {
           if (!res.ok) throw new Error("Error al cargar publicaciones");
           return res.json();
