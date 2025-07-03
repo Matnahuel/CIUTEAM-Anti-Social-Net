@@ -43,7 +43,7 @@ function Home() {
         <section className="welcome-section">
           <h1>¡Bienvenido a UnaHur Anti-Social Net!</h1>
           <p>Tu espacio para conectar y compartir en la comunidad Unahur.</p>
-          <p>Explora las últimas publicaciones o <Link to="/crear-post" className="create-post-link">crea la tuya</Link></p>
+          <p>Explora las últimas publicaciones o <Link to="/crear-post" className="create-post-link">Crea la tuya</Link></p>
         </section>
 
         <section className="posts-feed-section">

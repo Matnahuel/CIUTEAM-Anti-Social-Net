@@ -29,7 +29,6 @@ function Header() {
           UnaHur Anti‑Social Net
         </Link>
 
-        {/* Menú de navegación para pantallas grandes */}
         <nav className="main-nav">
           {usuario ? (
             <>
@@ -42,24 +41,30 @@ function Header() {
           )}
         </nav>
 
-        {/* Icono de menú hamburguesa */}
-        <div
-          className={`hamburger-menu ${isOpen ? 'open' : ''}`}
-          onClick={toggleMenu}
-        >
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
-        </div>
+        
+        {usuario && (
+          <div
+            className={`hamburger-menu ${isOpen ? 'open' : ''}`}
+            onClick={toggleMenu}
+          >
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
+          </div>
+        )}
       </div>
-
-      {/* Menú de navegación para móviles (se muestra condicionalmente) */}
       <nav className={`mobile-nav ${isOpen ? 'open' : ''}`}>
         {usuario ? (
           <>
-            <Link to="/home" onClick={toggleMenu}>Inicio</Link>
-            <Link to={`/perfil`} onClick={toggleMenu}>Perfil</Link>
-            <Link to="/crear-post" onClick={toggleMenu}>Crear Post</Link>
+            <Link to="/home" onClick={toggleMenu}>
+              Inicio
+            </Link>
+            <Link to={`/perfil`} onClick={toggleMenu}>
+              Perfil
+            </Link>
+            <Link to="/crear-post" onClick={toggleMenu}>
+              Crear Post
+            </Link>
           </>
         ) : (
           <></>
