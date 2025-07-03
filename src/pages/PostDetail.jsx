@@ -86,19 +86,23 @@ export default function PostDetail() {
         ))}
       </div>
 
-      <div>
-        <h4>Comentarios:</h4>
-        <ul>
-          {comments &&
-          comments.map((c) => (
-    <li key={c.id}>
-      {usuarios
-        .find((u) => u.id === c.UserId)
-        .nickName} : {c.content}
-    </li>
-  ))}
-        </ul>
-      </div>
+ <div>
+  <h4>Comentarios:</h4>
+  <ul>
+    {comments && comments.length > 0 ? ( 
+      comments.map((c) => {
+        const user = usuarios.find((u) => u.id === c.UserId);
+        return (
+          <li key={c.id}>
+            {user.nickName}: {c.content} 
+          </li>
+        );
+      })
+    ) : (
+      <li>No hay comentarios aún.</li> 
+    )}
+  </ul>
+</div>
 
       <form onSubmit={handleCommentSubmit}>
         <textarea
