@@ -135,10 +135,10 @@ Para poner en marcha el proyecto en tu máquina local, sigue los siguientes paso
 
 1.  **Clonar el Repositorio:**
     ```bash
-    git clone [URL_DE_TU_REPOSITORIO_GITHUB]
+    git clone https://github.com/IRojas99/CIUTEAM-Anti-Social-Net
     cd UnaHur-Anti-Social-Net
     ```
-    *(**Nota:** Reemplaza `[URL_DE_TU_REPOSITORIO_GITHUB]` con la URL real de tu repositorio en GitHub. Recuerda que el repositorio debe ser público para la entrega.)*
+
 
 2.  **Instalar Dependencias:**
     Asegúrate de tener Node.js y npm instalados en tu sistema. Luego, instala las dependencias del proyecto:
