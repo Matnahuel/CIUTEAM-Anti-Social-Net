@@ -89,12 +89,14 @@ export default function PostDetail() {
       <div>
         <h4>Comentarios:</h4>
         <ul>
-          {comments.map((c) => (
-            <li key={c.id}> 
-            {usuarios
-            .find(u => u.id === c.UserId).nickName 
-            } : {c.content}</li>
-          ))}
+          {comments &&
+          comments.map((c) => (
+    <li key={c.id}>
+      {usuarios
+        .find((u) => u.id === c.UserId)
+        .nickName} : {c.content}
+    </li>
+  ))}
         </ul>
       </div>
 

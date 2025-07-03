@@ -70,7 +70,7 @@ body {
 }
 
 .pagination-btn:hover:not(:disabled) {
-  background-color: #4caf50;
+  background-color: #2C394B;
   color: white;
 }
 
@@ -80,7 +80,7 @@ body {
 }
 
 .page-number-btn.active {
-  background-color: #4caf50;
+  background-color: #2C394B;
   color: white;
   font-weight: bold;
 }
@@ -659,6 +659,37 @@ body {
     .post-description { font-size: 0.95em; }
     .post-comments { font-size: 0.9em; }
     .about-us-section::before, .about-us-section::after { width: 25px; height: 25px; }
+}
+.search-bar {
+  margin-bottom: 30px; 
+  text-align: center;
+ 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); 
+  max-width: 600px; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+.tag-search-input {
+  width: 90%;
+  padding: 12px 18px; 
+  border: 1px solid #ddd; 
+  border-radius: 25px; 
+  font-size: 1.1rem; 
+  color: #333; 
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.tag-search-input::placeholder {
+  color: #888; 
+  font-style: italic; 
+}
+
+.tag-search-input:focus {
+  border-color: #007bff; 
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
 }
 
 @media (max-width: 480px) {

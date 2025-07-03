@@ -5,12 +5,25 @@ import './Home.css';
 function Home() {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
-  const POSTS_PER_PAGE = 10;
-  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+  const [searchTerm, setSearchTerm] = useState("");
+  const POSTS_PER_PAGE = 9;
+ const filteredPosts = posts.filter(post => {
+  if (searchTerm === "") {
+    return true;
+  }
+  return post.Tags && post.Tags.some(tag =>
+    tag.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+});
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
   const [currentPage, setCurrentPage] = useState(1);
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
-  const postsPaginated = posts.slice(startIndex, endIndex);
+  const postsPaginated = filteredPosts.slice(startIndex, endIndex);
+    const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
+  };
 
   useEffect(() => {
     fetch('http://localhost:3001/posts')
@@ -37,7 +50,7 @@ function Home() {
       });
   }, []);
 
-  return (
+    return (
     <div className="home-general-container">
       <main className="home-main-content">
         <section className="welcome-section">
@@ -48,7 +61,22 @@ function Home() {
 
         <section className="posts-feed-section">
           <h2>Últimas Publicaciones</h2>
+
+          
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Buscar publicaciones por tag..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="tag-search-input"
+            />
+          </div>
+
           {error && <p style={{ color: 'red' }}>{error}</p>}
+          {filteredPosts.length === 0 && searchTerm !== "" && (
+            <p>No se encontraron publicaciones con el tag "{searchTerm}".</p>
+          )}
 
           <div className="posts-grid">
             {postsPaginated.map((post) => (
@@ -69,7 +97,7 @@ function Home() {
                       <span key={tag.id} className="post-tag">#{tag.name}</span>
                     ))}
                   </div>
-                  <p className="post-comments">Comentarios: {/* Si querés mostrar contarlos en el futuro */}</p>
+                  <p className="post-comments">Comentarios: </p>
                 </div>
 
                 <Link to={`/posts/${post.id}`} className="view-more-button">Ver Más</Link>
@@ -78,6 +106,7 @@ function Home() {
           </div>
         </section>
 
+   
         <div className="pagination-controls">
           <button
             className="pagination-btn"
