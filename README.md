@@ -149,7 +149,7 @@ Para poner en marcha el proyecto en tu máquina local, sigue los siguientes paso
 3.  **Configurar y Ejecutar la API (Backend):**
     Este trabajo práctico utiliza una API ya preparada. Para correrla localmente, sigue las instrucciones del repositorio de la API:
     **URL de la API:** [https://github.com/lucasfigarola/backend-api](https://github.com/lucasfigarola/backend-api)
-    *Generalmente, los pasos incluyen clonar ese repositorio e iniciar el servidor (ej: `npm install` y `npm start` en el directorio de la API). Asegúrate de que el backend esté corriendo en el puerto `3000` (o el puerto configurado para la API).*
+    *Generalmente, los pasos incluyen clonar ese repositorio, iniciar el servidor y cargar el seed.js (ej: `npm install` y `npm start` en el directorio de la API). Asegúrate de que el backend esté corriendo en el puerto `3000` (o el puerto configurado para la API).*
 
 4.  **Ejecutar la Aplicación Frontend:**
     Inicia el servidor de desarrollo del Frontend. La aplicación estará disponible en `http://localhost:5173/` (o un puerto similar).
