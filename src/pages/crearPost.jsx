@@ -10,6 +10,7 @@ function CrearPost() {
   const [imageUrls, setImageUrls] = useState(['']);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [showTags, setShowTags] = useState(false); // ✅ Estado para mostrar u ocultar
 
   useEffect(() => {
     fetch('http://localhost:3001/tags')
@@ -105,26 +106,42 @@ function CrearPost() {
                 <button type="button" onClick={() => removeImageField(index)}>❌</button>
               </div>
             ))}
-            <button type="button" onClick={addImageField} className="create-post-link">Agregar otra URL</button>
+            <button type="button" onClick={addImageField} className="create-post-link">
+              Agregar otra URL
+            </button>
           </div>
 
-          <div style={{ marginTop: '15px' }}>
-            <label>Seleccionar etiquetas:</label><br />
-            <select
-              multiple
-              value={selectedTags}
-              onChange={(e) =>
-                setSelectedTags(Array.from(e.target.selectedOptions, opt => Number(opt.value)))
-              }
-              style={{ width: '100%', height: '120px' }}
-            >
-              {tags.map((tag) => (
-                <option key={tag.id} value={tag.id}>{tag.name}</option>
-              ))}
-            </select>
-          </div>
+          {/* ✅ Botón para mostrar u ocultar selector */}
+          <button
+            type="button"
+            onClick={() => setShowTags(!showTags)}
+            className="create-post-link"
+            style={{ marginTop: '15px' }}
+          >
+            {showTags ? "Ocultar etiquetas" : "Seleccionar etiquetas"}
+          </button>
 
-          <button type="submit" className="create-post-link" style={{ marginTop: '15px' }}>Publicar</button>
+          {showTags && (
+            <div style={{ marginTop: '15px' }}>
+              <label>Seleccionar etiquetas:</label><br />
+              <select
+                multiple
+                value={selectedTags}
+                onChange={(e) =>
+                  setSelectedTags(Array.from(e.target.selectedOptions, opt => Number(opt.value)))
+                }
+                style={{ width: '100%', height: '120px' }}
+              >
+                {tags.map((tag) => (
+                  <option key={tag.id} value={tag.id}>{tag.name}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          <button type="submit" className="create-post-link" style={{ marginTop: '15px' }}>
+            Publicar
+          </button>
         </form>
       </main>
     </div>

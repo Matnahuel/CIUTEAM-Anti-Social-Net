@@ -51,6 +51,39 @@ body {
     z-index: -2;
     animation: grid-fade-in 2s ease-out forwards;
 }
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.pagination-btn {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #4caf50;
+  color: white;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-number-btn.active {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
 
 @keyframes grid-fade-in {
     from { opacity: 0; }

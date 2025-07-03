@@ -5,13 +5,12 @@ import './Home.css';
 function Home() {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
-    const POSTS_PER_PAGE = 10;
-    const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
-    const [currentPage, setCurrentPage] = useState(1);
-    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-    const endIndex = startIndex + POSTS_PER_PAGE;
-    const postsPaginated = posts.slice(startIndex, endIndex);
-
+  const POSTS_PER_PAGE = 10;
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+  const [currentPage, setCurrentPage] = useState(1);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const postsPaginated = posts.slice(startIndex, endIndex);
 
   useEffect(() => {
     fetch('http://localhost:3001/posts')
@@ -20,7 +19,6 @@ function Home() {
         return res.json();
       })
       .then(async (postsApi) => {
-        // Para cada post, traer imágenes
         const postsConImagenes = await Promise.all(
           postsApi.map(async (post) => {
             const resImg = await fetch(`http://localhost:3001/postimages/post/${post.id}`);
@@ -42,14 +40,12 @@ function Home() {
   return (
     <div className="home-general-container">
       <main className="home-main-content">
-        {/* Banner de bienvenida */}
         <section className="welcome-section">
           <h1>¡Bienvenido a UnaHur Anti-Social Net!</h1>
           <p>Tu espacio para conectar y compartir en la comunidad Unahur.</p>
-          <p>Explora las últimas publicaciones o <Link to="/crear-post" className="create-post-link">crea la tuya</Link>.</p>
+          <p>Explora las últimas publicaciones o <Link to="/crear-post" className="create-post-link">crea la tuya</Link></p>
         </section>
 
-        {/* Feed de publicaciones recientes */}
         <section className="posts-feed-section">
           <h2>Últimas Publicaciones</h2>
           {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -81,39 +77,39 @@ function Home() {
             ))}
           </div>
         </section>
-      
-  <div className="pagination-controls">
-  <button
-    className="prev"
-    onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
-    disabled={currentPage === 1}
-  >
-    Anterior
-  </button>
 
-  {[...Array(totalPages)].map((_, index) => {
-    const pageNum = index + 1;
-    return (
-      <button
-        key={pageNum}
-        className={`page-number ${currentPage === pageNum ? "active" : ""}`}
-        onClick={() => setCurrentPage(pageNum)}
-        disabled={currentPage === pageNum}
-      >
-        {pageNum}
-      </button>
-    );
-  })}
+        <div className="pagination-controls">
+          <button
+            className="pagination-btn"
+            onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            ⬅ Anterior
+          </button>
 
-  <button
-    className="next"
-    onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
-    disabled={currentPage === totalPages}
-  >
-    Siguiente
-  </button>
-    </div>
-        {/* Sección Sobre nosotros */}
+          {[...Array(totalPages)].map((_, index) => {
+            const pageNum = index + 1;
+            return (
+              <button
+                key={pageNum}
+                className={`pagination-btn page-number-btn ${currentPage === pageNum ? "active" : ""}`}
+                onClick={() => setCurrentPage(pageNum)}
+                disabled={currentPage === pageNum}
+              >
+                {pageNum}
+              </button>
+            );
+          })}
+
+          <button
+            className="pagination-btn"
+            onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente ➡
+          </button>
+        </div>
+
         <section className="about-us-section">
           <h2>Sobre Nuestra Red</h2>
           <p>UnaHur Anti-Social Net es una plataforma creada por y para la comunidad de la Universidad Nacional de Hurlingham. Nuestro objetivo es fomentar la conexión, el intercambio de ideas y la colaboración entre estudiantes, profesores y egresados.</p>
