@@ -1,41 +1,190 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+
+:root {
+  --bg-dark: #0B0E17;
+  --bg-medium: #181D29;
+  --card-bg: #202635;
+  --text-primary: #E0E8F0;
+  --text-secondary: #A0B0C0;
+  --accent-blue: #00A3CC;
+  --accent-grey: #6C7A89;
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-active: rgba(0, 163, 204, 0.2);
+  --shadow-deep: rgba(0, 0, 0, 0.7);
+  --shadow-light: rgba(0, 0, 0, 0.3);
+  --transition-fast: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-slow: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
 
 .main-header {
-  background-color: #ffffff; 
-  border-bottom: 1px solid #dbdbdb;
-  padding: 10px 20px;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.09); 
-  position: sticky; 
+  background-color: var(--bg-medium);
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 20px var(--shadow-deep);
+  position: sticky;
   top: 0;
-  z-index: 1000; 
+  z-index: 1000;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .header-container {
-  /* max-width: 935px;  */
-  margin: 0 auto; 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 .app-logo {
-  font-family: 'Arial', sans-serif; 
-  font-size: 1.8em; 
-  font-weight: bold;
-  color: #262626; 
-  text-decoration: none; 
+  color: var(--accent-blue);
+  font-size: 1.8em;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(0, 163, 204, 0.5);
+  transition: var(--transition-fast);
+}
+
+.app-logo:hover {
+  color: var(--text-primary);
+  text-shadow: 0 0 15px var(--text-primary);
 }
 
 .main-nav a {
-  color: #262626;
+  color: var(--text-secondary);
   text-decoration: none;
-  font-size: 1em;
-  margin-left: 20px;
-  transition: color 0.2s ease-in-out;
+  margin-left: 30px;
+  font-size: 1.05em;
+  font-weight: 500;
+  position: relative;
+  transition: var(--transition-fast);
+}
+
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-blue);
+  bottom: -5px;
+  left: 0;
+  transition: width var(--transition-fast);
 }
 
 .main-nav a:hover {
-  color: #0095f6; 
+  color: var(--text-primary);
 }
 
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+.main-nav a.active { 
+  color: var(--accent-blue);
+}
+
+/* --- Menú Hamburguesa --- */
+
+.hamburger-menu {
+  display: none; 
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  z-index: 1001; 
+}
+
+.hamburger-menu .bar {
+  width: 100%;
+  height: 3px;
+  background-color: var(--text-primary);
+  border-radius: 5px;
+  transition: all var(--transition-fast) ease-in-out;
+}
+
+
+.hamburger-menu.open .bar:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+
+.hamburger-menu.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.open .bar:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+.mobile-nav {
+  display: none; 
+  flex-direction: column;
+  position: absolute;
+  top: 70px; /* Debajo del header */
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-medium);
+  border-top: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 30px var(--shadow-deep);
+  padding: 20px 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  z-index: 999;
+}
+
+.mobile-nav.open {
+  display: flex; 
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-nav a {
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 15px 40px;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: var(--transition-fast);
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.mobile-nav a:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav a:hover {
+  background-color: var(--card-bg);
+  color: var(--accent-blue);
+  padding-left: 50px; 
+}
+
+
+
+@media (max-width: 768px) {
+  .main-header {
+    padding: 15px 20px;
+  }
+
+  .app-logo {
+    font-size: 1.5em;
+  }
+
+  .main-nav {
+    display: none; 
+  }
+
+  .hamburger-menu {
+    display: flex; 
+  }
+}
+
+@media (max-width: 480px) {
+  .main-header {
+    padding: 10px 15px;
+  }
+  .app-logo {
+    font-size: 1.3em;
+  }
+}

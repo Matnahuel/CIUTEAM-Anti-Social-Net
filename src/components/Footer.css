@@ -1,27 +1,97 @@
-
+:root {
+  --bg-dark: #0B0E17;
+  --bg-medium: #181D29;
+  --text-primary: #E0E8F0;
+  --text-secondary: #A0B0C0;
+  --accent-blue: #00A3CC;
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --shadow-deep: rgba(0, 0, 0, 0.7);
+  --transition-fast: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
 .main-footer {
-  background-color: #fafafa; 
-  border-top: 1px solid #dbdbdb; 
-  padding: 20px;
-  text-align: center;
-  color: #8e8e8e; 
-  font-size: 0.85em;
-  margin-top: 50px; 
+  background-color: var(--bg-medium);
+  border-top: 1px solid var(--border-subtle);
+  padding: 30px 40px;
+  color: var(--text-secondary);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9em;
+  text-align: center; /* Centra el texto del copyright por defecto */
+  box-shadow: 0 -4px 20px var(--shadow-deep);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .footer-container {
-  max-width: 935px; 
+  display: flex;
+  flex-direction: column; /* Siempre en columna para apilar elementos */
+  align-items: center; /* Centra los elementos horizontalmente */
+  max-width: 1500px;
   margin: 0 auto;
+  gap: 15px;
+}
+
+.main-footer p {
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.utility-links {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center; /* Centra los enlaces dentro de su contenedor */
 }
 
 .utility-links a {
-  color: #8e8e8e;
+  color: var(--text-secondary);
   text-decoration: none;
-  margin: 0 10px; 
-  transition: color 0.2s ease-in-out;
+  font-weight: 500;
+  position: relative;
+  transition: var(--transition-fast);
+  padding-bottom: 3px;
+}
+
+.utility-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-blue);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width var(--transition-fast);
 }
 
 .utility-links a:hover {
-  color: #262626; 
+  color: var(--accent-blue);
+}
+
+.utility-links a:hover::after {
+  width: 100%;
+}
+
+/* --- Media Queries --- */
+
+@media (min-width: 768px) {
+  .main-footer {
+    padding: 25px 40px;
+  }
+ 
+}
+
+@media (max-width: 480px) {
+  .main-footer {
+    padding: 20px 20px;
+    font-size: 0.8em;
+  }
+
+  .utility-links {
+    gap: 15px;
+  }
+
+  .utility-links a {
+    font-size: 0.85em;
+  }
 }

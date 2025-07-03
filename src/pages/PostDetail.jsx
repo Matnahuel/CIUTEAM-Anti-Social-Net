@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
+import './PostDetail.css';
 
 const API_URL = "http://localhost:3001";
 
