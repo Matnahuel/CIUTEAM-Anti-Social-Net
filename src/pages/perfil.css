@@ -1,150 +1,424 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+
+:root {
+    --bg-dark: #0B0E17; 
+    --bg-medium: #181D29; 
+    --card-bg: #202635; 
+    --text-primary: #E0E8F0; 
+    --text-secondary: #A0B0C0; 
+    --accent-blue: #00A3CC; 
+    --accent-grey: #6C7A89; 
+    --border-subtle: rgba(255, 255, 255, 0.04); 
+    --border-active: rgba(0, 163, 204, 0.2); 
+    --shadow-deep: rgba(0, 0, 0, 0.7);
+    --shadow-light: rgba(0, 0, 0, 0.3);
+    --transition-fast: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --transition-slow: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+    --original-card-bg: #ffffff;
+    --original-card-shadow: rgba(0, 0, 0, 0.08);
+    --original-text-dark: #424242;
+    --original-button-blue: #4285f4;
+    --original-button-blue-hover: #3367d6;
+}
+
 .profile-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bg-dark); 
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text-primary); 
+    line-height: 1.6;
+    font-size: 0.9em;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+                      linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.08;
+    z-index: -2;
 }
 
 .profile-page main {
-  flex-grow: 1;
-  padding: 2rem 3rem;
-  margin: 0;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100vw;
-  max-width: 100vw;
-  box-sizing: border-box;
+    flex-grow: 1;
+    max-width: 1500px;
+    margin: 60px auto;
+    padding: 50px;
+    background-color: var(--bg-medium);
+    border-radius: 20px;
+    box-shadow: 0 15px 60px var(--shadow-deep);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    animation: slideInFromBottom 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    z-index: 1;
+    width: auto;
+    box-sizing: border-box;
 }
+
+@keyframes slideInFromBottom {
+    from { opacity: 0; transform: translateY(50px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.profile-page main::after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+    opacity: 0.8;
+    filter: blur(80px);
+    animation: subtle-glow 8s infinite alternate ease-in-out;
+    z-index: -1;
+}
+
+@keyframes subtle-glow {
+    from { transform: translate(0, 0); }
+    to { transform: translate(calc(100% - 100px), calc(100% - 100px)); }
+}
+
+
 
 .user-section {
-  text-align: center;
-  margin-bottom: 3rem;
-  padding: 2rem;
-  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin-bottom: 80px;
+    padding: 50px;
+    background: linear-gradient(145deg, #1A1F2C, #2C3240);
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: section-fade-in 1s ease-out forwards;
+    animation-delay: 0.2s;
+    transform: translateY(20px);
+    opacity: 0;
 }
+
+@keyframes section-fade-in {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(to bottom, transparent, transparent 1px, rgba(255, 255, 255, 0.01) 1px, rgba(255, 255, 255, 0.01) 3px);
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+}
+
 
 .user-section h2 {
-  color: #00796b;
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 3.2em;
+    margin-bottom: 25px;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+    line-height: 1.2;
+    animation: text-subtle-shine 3s infinite alternate;
 }
 
+@keyframes text-subtle-shine {
+    from { opacity: 1; }
+    to { opacity: 0.9; }
+}
+
+.user-section p {
+    font-size: 1.05em;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    opacity: 0.85;
+}
+
+
 .logout-button {
-  background-color: #ef5350;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1.5rem;
+    background-color: #EF4444;
+    color: var(--text-primary);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 500;
+    transition: var(--transition-fast);
+    box-shadow: 0 3px 8px rgba(239, 68, 68, 0.3);
+    margin-top: 30px;
 }
 
 .logout-button:hover {
-  background-color: #d32f2f;
-  transform: translateY(-2px);
+    background-color: #DC2626;
+    transform: translateY(-1px) scale(1.005);
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
 }
 
+
 .posts-section {
-  margin-bottom: 3rem;
+    margin-bottom: 80px;
+    text-align: center;
 }
 
 .posts-section h3 {
-  color: #3949ab;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #e0e0e0;
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2.8em;
+    margin-bottom: 60px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 25px;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-bottom: none;
+}
+
+.posts-section h3::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0, 163, 204, 0.5);
+    transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.posts-section h3:hover::after {
+    width: 100%;
 }
 
 .posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    justify-content: center; 
+    max-width: 1200px; 
+    width: 100%; 
+    margin: 0 auto;
+   
+
+    box-sizing: border-box;
 }
 
 .post-card {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  padding: 1.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--original-card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--original-card-shadow);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 auto; 
+    max-width: 300px; 
+    width: 100%;
 }
 
 .post-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px var(--original-card-shadow);
 }
 
+.post-card::before {
+    content: none;
+}
+
+
 .post-description {
-  color: #424242;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+    color: var(--original-text-dark);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.post-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-image {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.post-image:first-child {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+}
+
+.post-image:hover {
+    transform: scale(1.05);
+    border-color: #aaa;
 }
 
 .view-post-button {
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  padding: 0.6rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%;
+    background-color: var(--original-button-blue);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
 
 .view-post-button:hover {
-  background-color: #3367d6;
+    background-color: var(--original-button-blue-hover);
 }
 
+
 .error {
-  color: #d32f2f;
-  text-align: center;
-  margin: 1rem 0;
-  font-weight: 500;
+    color: #EF4444;
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 .no-posts-message {
-  text-align: center;
-  color: #757575;
-  font-style: italic;
-  padding: 2rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 2rem;
+    opacity: 0.7;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .loading-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  color: #616161;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: var(--accent-grey);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1em;
 }
 
 
+
+@media (max-width: 1400px) {
+    .profile-page main {
+        max-width: 1500px; 
+        padding: 40px;
+    }
+    .posts-grid {
+        max-width: 1000px; 
+    }
+}
+
+@media (max-width: 1200px) {
+    .profile-page main {
+        max-width: 900px;
+        padding: 35px;
+    }
+    .user-section h2 { font-size: 2.8em; }
+    .posts-section h3 { font-size: 2.5em; }
+    .posts-grid {
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 992px) {
+    .profile-page main {
+        margin: 40px 20px;
+        padding: 30px;
+    }
+    .user-section {
+        padding: 35px;
+    }
+    .user-section h2 { font-size: 2.4em; }
+    .logout-button { font-size: 0.8em; padding: 7px 18px; border-radius: 5px;}
+    .posts-section h3 { font-size: 2.2em; }
+    .posts-grid {
+        grid-template-columns: 1fr; 
+        gap: 1.5rem;
+        justify-content: center;
+        max-width: 350px; 
+    }
+    .post-card {
+        padding: 1rem;
+        border-radius: 8px;
+        max-width: 300px;
+    }
+    .post-description {
+        font-size: 0.95em;
+    }
+    .post-image { width: 90px; height: 60px; }
+    .post-image:first-child { height: 160px; }
+    .view-post-button { font-size: 0.9rem; padding: 0.7rem 1.2rem; }
+}
+
 @media (max-width: 768px) {
-  .profile-page main {
-    padding: 1rem;
-    width: 100%;
-    max-width: 100%;
-  }
+    .profile-page main {
+        margin: 30px 15px;
+        padding: 25px;
+    }
+    .user-section {
+        padding: 30px;
+    }
+    .user-section h2 { font-size: 2em; }
+    .logout-button { font-size: 0.75em; padding: 6px 15px; border-radius: 4px; }
+    .posts-section h3 { font-size: 2em; }
+    .posts-grid {
+        max-width: 320px; 
+    }
+    .post-card {
+        padding: 1rem;
+    }
+    .post-description { font-size: 0.9em; }
+    .view-post-button { font-size: 0.85rem; padding: 0.6rem 1rem; }
+}
 
-  .user-section {
-    padding: 1.5rem;
-  }
-
-  .user-section h2 {
-    font-size: 2rem;
-  }
-
-  .posts-section h3 {
-    font-size: 1.6rem;
-  }
-
-  .posts-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 480px) {
+    .profile-page main {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+    .user-section {
+        padding: 25px;
+    }
+    .user-section h2 { font-size: 1.8em; }
+    .logout-button { font-size: 0.7em; padding: 5px 10px; border-radius: 3px; }
+    .posts-section h3 { font-size: 1.8em; }
+    .posts-grid {
+        max-width: 290px; 
+    }
+    .post-card {
+        padding: 0.8rem;
+    }
+    .post-description { font-size: 0.85em; }
+    .view-post-button { font-size: 0.8rem; padding: 0.5rem 0.8rem; }
 }
