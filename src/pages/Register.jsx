@@ -82,7 +82,11 @@ export default function Register() {
   <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
     <div className="card shadow p-4 w-100" style={{ maxWidth: 480 }}>
       <h1 className="h4 text-center mb-4 text-secondary fw-semibold">
-        Bienvenidos a unahur anti social
+        UNAHUR ANTI-SOCIAL NET
+      </h1>
+      <br />
+      <h1 className="h4 text-center mb-4 text-secondary fw-semibold">
+       Crea tu cuenta
       </h1>
 
       <form onSubmit={handleSubmit} noValidate>

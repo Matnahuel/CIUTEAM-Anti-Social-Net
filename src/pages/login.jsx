@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Link } from "react-router-dom";
+import "./login.css"
 export default function Login() {
     const [nickname, setNickname] = useState("");
     const [password, setPassword] = useState("");
@@ -56,6 +57,10 @@ export default function Login() {
 return (
   <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
     <div className="card shadow p-4 w-100" style={{ maxWidth: 480 }}>
+      <h1 className="h4 text-center mb-4 text-secondary fw-semibold">
+        UNAHUR ANTI-SOCIAL NET
+      </h1>
+      <br />
       <h1 className="h4 text-center mb-4 text-secondary fw-semibold">
         Iniciar Sesión
       </h1>
