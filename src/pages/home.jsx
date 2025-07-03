@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import './Home.css';
 
 function Home() {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
+    const POSTS_PER_PAGE = 10;
+    const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+    const [currentPage, setCurrentPage] = useState(1);
+    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+    const endIndex = startIndex + POSTS_PER_PAGE;
+    const postsPaginated = posts.slice(startIndex, endIndex);
+
 
   useEffect(() => {
     fetch('http://localhost:3001/posts')
@@ -50,7 +55,7 @@ function Home() {
           {error && <p style={{ color: 'red' }}>{error}</p>}
 
           <div className="posts-grid">
-            {posts.map((post) => (
+            {postsPaginated.map((post) => (
               <div key={post.id} className="post-card">
                 <p className="post-description">{post.description}</p>
 
@@ -71,12 +76,43 @@ function Home() {
                   <p className="post-comments">Comentarios: {/* Si querés mostrar contarlos en el futuro */}</p>
                 </div>
 
-                <Link to={`/post/${post.id}`} className="view-more-button">Ver Más</Link>
+                <Link to={`/posts/${post.id}`} className="view-more-button">Ver Más</Link>
               </div>
             ))}
           </div>
         </section>
+      
+  <div className="pagination-controls">
+  <button
+    className="prev"
+    onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+    disabled={currentPage === 1}
+  >
+    Anterior
+  </button>
 
+  {[...Array(totalPages)].map((_, index) => {
+    const pageNum = index + 1;
+    return (
+      <button
+        key={pageNum}
+        className={`page-number ${currentPage === pageNum ? "active" : ""}`}
+        onClick={() => setCurrentPage(pageNum)}
+        disabled={currentPage === pageNum}
+      >
+        {pageNum}
+      </button>
+    );
+  })}
+
+  <button
+    className="next"
+    onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+    disabled={currentPage === totalPages}
+  >
+    Siguiente
+  </button>
+    </div>
         {/* Sección Sobre nosotros */}
         <section className="about-us-section">
           <h2>Sobre Nuestra Red</h2>

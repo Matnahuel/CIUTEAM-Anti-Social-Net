@@ -226,3 +226,62 @@
     font-size: 1.8em;
   }
 }
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+/* Botones numéricos con estilo de botón */
+.pagination-controls button.page-number {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background-color 0.3s ease;
+}
+
+.pagination-controls button.page-number:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Botón numérico activo */
+.pagination-controls button.page-number.active {
+  background-color: #0056b3;
+  cursor: default;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Botones Anterior y Siguiente solo texto azul, sin fondo ni sombra */
+.pagination-controls button.prev,
+.pagination-controls button.next {
+  background-color: transparent;
+  color: #007bff;
+  border: none;
+  padding: 8px 14px;
+  font-weight: normal;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: none;
+  transition: color 0.3s ease;
+}
+
+/* Cambia solo el color del texto en hover para Anterior y Siguiente */
+.pagination-controls button.prev:hover:not(:disabled),
+.pagination-controls button.next:hover:not(:disabled) {
+  color: #0056b3;
+}
+
+/* Botones Anterior y Siguiente deshabilitados */
+.pagination-controls button.prev:disabled,
+.pagination-controls button.next:disabled {
+  color: #ccc;
+  cursor: default;
+}
