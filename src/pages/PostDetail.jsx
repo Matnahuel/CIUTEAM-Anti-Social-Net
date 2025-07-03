@@ -41,7 +41,7 @@ export default function PostDetail() {
     });
 
 
-  }, [id]);
+  }, []);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -89,17 +89,17 @@ export default function PostDetail() {
  <div>
   <h4>Comentarios:</h4>
   <ul>
-    {comments && comments.length > 0 ? ( 
+    {comments && comments.length > 0 ? (
       comments.map((c) => {
         const user = usuarios.find((u) => u.id === c.UserId);
         return (
           <li key={c.id}>
-            {user.nickName}: {c.content} 
+            {user ? user.nickName : 'Usuario Desconocido'}: {c.content}
           </li>
         );
       })
     ) : (
-      <li>No hay comentarios aún.</li> 
+      <li>No hay comentarios aún.</li>
     )}
   </ul>
 </div>
