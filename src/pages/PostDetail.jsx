@@ -29,9 +29,9 @@ export default function PostDetail() {
 
     // Obtener comentarios
   fetch(`${API_URL}/comments/post/${id}`)
-    .then(r => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${r.status}`);
+      return res.json();
     })
     .then(setComments)
     .catch(err => {

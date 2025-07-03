@@ -11,6 +11,7 @@ function CrearPost() {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [showTags, setShowTags] = useState(false); // ✅ Estado para mostrar u ocultar
+  const [newTagName, setNewTagName] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:3001/tags')
@@ -76,76 +77,136 @@ function CrearPost() {
     }
   };
 
+  const handleCreateTag = async () => {
+    const name = newTagName.trim();
+    if (!name) return;
+
+    try {
+      const res = await fetch('http://localhost:3001/tags', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name }),
+      });
+
+      if (!res.ok) throw new Error('No se pudo crear la etiqueta');
+
+      const nueva = await res.json();
+      setNewTagName('');
+      setTags(prev => [...prev, nueva]);
+      setSelectedTags(prev => [...prev, nueva.id]);
+    } catch (err) {
+      console.error(err);
+      alert('Error al crear la etiqueta');
+    }
+  };
+  const tagDuplicado = tags.some(
+  t => t.name.toLowerCase() === newTagName.trim().toLowerCase()
+);
+
   return (
-    <div className="home-general-container">
-      <main className="home-main-content">
-        <h2>Crear nueva publicación</h2>
-        <form onSubmit={handleSubmit} style={{ textAlign: 'left' }}>
-          <div>
-            <label>Descripción *</label><br />
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="¿Qué estás pensando?"
-              required
-              style={{ width: '100%', minHeight: '100px', marginBottom: '10px' }}
-            />
-          </div>
+  
+  <div className="home-general-container">
+    <main className="home-main-content">
+      <h2>Crear nueva publicación</h2>
+      <form onSubmit={handleSubmit} style={{ textAlign: 'left' }}>
+        <div>
+          <label>Descripción *</label><br />
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="¿Qué estás pensando?"
+            required
+            style={{ width: '100%', minHeight: '100px', marginBottom: '10px' }}
+          />
+        </div>
 
-          <div>
-            <label>URLs de imágenes (opcional):</label>
-            {imageUrls.map((url, index) => (
-              <div key={index} style={{ display: 'flex', marginBottom: '5px' }}>
-                <input
-                  type="text"
-                  value={url}
-                  onChange={(e) => handleImageUrlChange(index, e.target.value)}
-                  placeholder="https://..."
-                  style={{ flex: 1, marginRight: '5px' }}
-                />
-                <button type="button" onClick={() => removeImageField(index)}>❌</button>
-              </div>
-            ))}
-            <button type="button" onClick={addImageField} className="create-post-link">
-              Agregar otra URL
-            </button>
-          </div>
-
-          {/* ✅ Botón para mostrar u ocultar selector */}
-          <button
-            type="button"
-            onClick={() => setShowTags(!showTags)}
-            className="create-post-link"
-            style={{ marginTop: '15px' }}
-          >
-            {showTags ? "Ocultar etiquetas" : "Seleccionar etiquetas"}
-          </button>
-
-          {showTags && (
-            <div style={{ marginTop: '15px' }}>
-              <label>Seleccionar etiquetas:</label><br />
-              <select
-                multiple
-                value={selectedTags}
-                onChange={(e) =>
-                  setSelectedTags(Array.from(e.target.selectedOptions, opt => Number(opt.value)))
-                }
-                style={{ width: '100%', height: '120px' }}
-              >
-                {tags.map((tag) => (
-                  <option key={tag.id} value={tag.id}>{tag.name}</option>
-                ))}
-              </select>
+        <div>
+          <label>URLs de imágenes (opcional):</label>
+          {imageUrls.map((url, index) => (
+            <div key={index} style={{ display: 'flex', marginBottom: '5px' }}>
+              <input
+                type="text"
+                value={url}
+                onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                placeholder="https://..."
+                style={{ flex: 1, marginRight: '5px' }}
+              />
+              <button type="button" onClick={() => removeImageField(index)}>❌</button>
             </div>
-          )}
-
-          <button type="submit" className="create-post-link" style={{ marginTop: '15px' }}>
-            Publicar
+          ))}
+          <button type="button" onClick={addImageField} className="create-post-link">
+            Agregar otra URL
           </button>
-        </form>
-      </main>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setShowTags(!showTags)}
+          className="create-post-link"
+          style={{ marginTop: '15px' }}
+        >
+          {showTags ? "Ocultar etiquetas" : "Seleccionar etiquetas"}
+        </button>
+
+        {showTags && (
+          <div style={{ marginTop: '15px' }}>
+            <label>Seleccionar etiquetas:</label><br />
+             <div
+      style={{
+        maxHeight: '120px',
+        overflowY: 'auto',
+        border: '1px solid #ccc',
+        padding: '5px'
+      }}
+    >
+      {tags.map(tag => (
+        <label
+          key={tag.id}
+          style={{ display: 'block', marginBottom: '4px', cursor: 'pointer' }}
+        >
+          <input
+            type="checkbox"
+            checked={selectedTags.includes(tag.id)}
+            onChange={e => {
+              if (e.target.checked) {
+                setSelectedTags(prev => [...prev, tag.id]);
+              } else {
+                setSelectedTags(prev => prev.filter(id => id !== tag.id));
+              }
+            }}
+            style={{ marginRight: '6px' }}
+          />
+          {tag.name}
+        </label>
+      ))}
     </div>
-  );
+
+            <div style={{ marginTop: '10px', display: 'flex', gap: '5px' }}>
+              <input
+                type="text"
+                value={newTagName}
+                onChange={e => setNewTagName(e.target.value)}
+                placeholder="Nueva etiqueta"
+                style={{ flex: 1 }}
+              />
+             <button
+                      type="button"
+                      onClick={handleCreateTag}
+                      disabled={!newTagName.trim() || tagDuplicado} 
+                    >
+                      {tagDuplicado ? 'Ya existe' : 'Crear'}
+                    </button>
+            </div>
+          </div>
+        )}
+
+        <button type="submit" className="create-post-link" style={{ marginTop: '15px' }}>
+          Publicar
+        </button>
+      </form>
+    </main>
+  </div>
+);
 }
 
 export default CrearPost;
