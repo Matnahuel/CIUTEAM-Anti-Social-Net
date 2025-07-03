@@ -2,30 +2,26 @@ import { useAuth } from "../contexts/authContext";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import './Header.css'; 
+import logo from '../assets/logo.png'; // <-- Importa tu logo aquí
 
 function Header() { 
   const { usuario } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
+
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768 && isOpen) {
-        setIsOpen(false);
-      }
-    }
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize);
+      if (window.innerWidth > 768 && isOpen) setIsOpen(false);
     };
-  },[isOpen])
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isOpen])
 
-
-   return (
+  return (
     <header className="main-header">
       <div className="header-container">
         <Link to="/home" className="app-logo">
+          <img src={logo} alt="Logo" className="logo-image" />
           UnaHur Anti‑Social Net
         </Link>
 
@@ -36,12 +32,9 @@ function Header() {
               <Link to={`/perfil`}>Perfil</Link>
               <Link to="/crear-post">Crear Post</Link>
             </>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </nav>
 
-        
         {usuario && (
           <div
             className={`hamburger-menu ${isOpen ? 'open' : ''}`}
@@ -53,25 +46,18 @@ function Header() {
           </div>
         )}
       </div>
+
       <nav className={`mobile-nav ${isOpen ? 'open' : ''}`}>
         {usuario ? (
           <>
-            <Link to="/home" onClick={toggleMenu}>
-              Inicio
-            </Link>
-            <Link to={`/perfil`} onClick={toggleMenu}>
-              Perfil
-            </Link>
-            <Link to="/crear-post" onClick={toggleMenu}>
-              Crear Post
-            </Link>
+            <Link to="/home" onClick={toggleMenu}>Inicio</Link>
+            <Link to={`/perfil`} onClick={toggleMenu}>Perfil</Link>
+            <Link to="/crear-post" onClick={toggleMenu}>Crear Post</Link>
           </>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </nav>
     </header>
   );
 }
 
-export default Header; 
+export default Header;

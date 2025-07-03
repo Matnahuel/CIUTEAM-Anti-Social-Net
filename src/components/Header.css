@@ -159,6 +159,22 @@
   color: var(--accent-blue);
   padding-left: 50px; 
 }
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
 
 
 
