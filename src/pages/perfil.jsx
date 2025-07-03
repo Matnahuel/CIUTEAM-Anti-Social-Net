@@ -11,18 +11,20 @@ export default function Profile() {
 
   useEffect(() => {
     if (!cargando && usuario?.id) {
-      fetch(`http://localhost:3001/posts?userId=${usuario.id}`)
+      fetch(`http://localhost:3001/posts?userId=${usuario.id}&_embed=Tags&_embed=Comments`)
         .then((res) => {
           if (!res.ok) throw new Error("Error al cargar publicaciones");
           return res.json();
         })
         .then(async (posts) => {
-          // 🔥 Para cada post, traer sus imágenes
           const postsConImagenes = await Promise.all(
             posts.map(async (post) => {
               const resImg = await fetch(`http://localhost:3001/postimages/post/${post.id}`);
               const images = await resImg.json();
-              return { ...post, PostImages: images };
+              return {
+                ...post,
+                images: images.map(img => img.url),
+              };
             })
           );
           setPublicaciones(postsConImagenes);
@@ -70,22 +72,33 @@ export default function Profile() {
                 <div key={post.id} className="post-card">
                   <p className="post-description">{post.description}</p>
 
-                  {post.PostImages && post.PostImages.length > 0 && (
-                    <div className="post-images" style={{ marginBottom: "1rem" }}>
-                      {post.PostImages.map((img, idx) => (
+                  {post.images && post.images.length > 0 && (
+                    <div className="post-images">
+                      {post.images.map((image, idx) => (
                         <img
                           key={idx}
-                          src={img.url}
+                          src={image}
                           alt={`Imagen ${idx + 1}`}
-                          style={{ width: "100%", borderRadius: "5px", marginBottom: "8px" }}
+                          className="post-image"
                         />
                       ))}
                     </div>
                   )}
 
+                  <div className="post-meta">
+                    <div className="post-tags">
+                      {post.Tags && post.Tags.map(tag => (
+                        <span key={tag.id} className="post-tag">#{tag.name}</span>
+                      ))}
+                    </div>
+                    <p className="post-comments">
+                      Comentarios: {post.Comments ? post.Comments.length : 0}
+                    </p>
+                  </div>
+
                   <button
                     className="view-post-button"
-                    onClick={() => navigate(`/posts/${post.id}`)} // Cambiado a plural "posts"
+                    onClick={() => navigate(`/posts/${post.id}`)}
                   >
                     Ver más
                   </button>
