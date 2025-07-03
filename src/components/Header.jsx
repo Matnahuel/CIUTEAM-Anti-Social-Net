@@ -2,7 +2,7 @@ import { useAuth } from "../contexts/authContext";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import './Header.css'; 
-import logo from '../assets/logo.png'; // <-- Importa tu logo aquí
+import logo from '../assets/logo2.png'; 
 
 function Header() { 
   const { usuario } = useAuth();

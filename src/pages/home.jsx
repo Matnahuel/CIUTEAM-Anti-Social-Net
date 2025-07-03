@@ -73,7 +73,7 @@ function Home() {
             />
           </div>
 
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
           {filteredPosts.length === 0 && searchTerm !== "" && (
             <p>No se encontraron publicaciones con el tag "{searchTerm}".</p>
           )}
