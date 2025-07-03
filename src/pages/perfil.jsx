@@ -85,7 +85,7 @@ export default function Profile() {
 
                   <button
                     className="view-post-button"
-                    onClick={() => navigate(`/post/${post.id}`)}
+                    onClick={() => navigate(`/posts/${post.id}`)} // Cambiado a plural "posts"
                   >
                     Ver más
                   </button>
