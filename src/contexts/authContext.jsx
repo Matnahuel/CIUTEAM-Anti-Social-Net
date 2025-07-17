@@ -1,46 +1,61 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useEffect } from 'react';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [usuario, setUsuario] = useState(null);
-  const [cargando, setCargando] = useState(true);
+export const useAuth = () => useContext(AuthContext);
 
+export const AuthProvider = ({ children }) => {
+    const [usuario, setUsuario] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const stored = sessionStorage.getItem("usuario");
-    if (stored) {
-      try {
-        setUsuario(JSON.parse(stored));     
-      } catch (err) {
-        console.error("Usuario corrupto en storage:", err);
-        sessionStorage.removeItem("usuario"); 
-      }
-    }
-    setCargando(false);
-  }, []);
+    useEffect(() => {
+        const storedUser = localStorage.getItem('usuario');
+        if (storedUser) {
+            try {
+                const parsedUser = JSON.parse(storedUser);
+                setUsuario(parsedUser);
+            } catch (e) {
+                console.error("Error al parsear usuario de localStorage", e);
+                localStorage.removeItem('usuario');
+            }
+        }
+        setIsLoading(false);
+    }, []);
 
+    const login = (userData) => {
+        setUsuario(userData);
+        localStorage.setItem('usuario', JSON.stringify(userData));
+        console.log("Usuario logueado y guardado:", userData);
+    };
 
-  const login = (user) => {
-    setUsuario(user);
-    sessionStorage.setItem("usuario", JSON.stringify(user));
-  };
+    const logout = () => {
+        setUsuario(null);
+        localStorage.removeItem('usuario');
+    };
 
+    const updateCurrentUserProfile = async (newProfileData) => {
+        if (usuario) {
+            const updatedUser = {
+                ...usuario,
+                ...newProfileData
+            };
+            setUsuario(updatedUser);
+            localStorage.setItem('usuario', JSON.stringify(updatedUser));
+            console.log("Usuario actualizado en contexto y localStorage:", updatedUser);
+        } else {
+            console.warn("No hay usuario logueado para actualizar el perfil.");
+        }
+    };
 
-  const logout = () => {
-    setUsuario(null);
-    sessionStorage.removeItem("usuario");
-  };
-
-  return (
-    <AuthContext.Provider value={{ usuario, login, logout, cargando }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
-
+    return (
+        <AuthContext.Provider value={{
+            usuario,
+            login,
+            logout,
+            isLoading,
+            updateCurrentUserProfile
+        }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};

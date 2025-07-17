@@ -1,13 +1,12 @@
-
-import Login from './pages/Login.jsx';
-import Home from './pages/Home.jsx'
+import Login from './pages/login.jsx';
+import Home from './pages/home.jsx';
 import Register from './pages/Register.jsx';
 import { AuthProvider } from './contexts/authContext';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CrearPost from './pages/crearPost.jsx';
-import Profile from './pages/perfil.jsx'
+import Profile from './pages/perfil.jsx';
 import Footer from './components/Footer.jsx';
 import Header from './components/Header.jsx';
 import PostDetail from './pages/PostDetail.jsx';

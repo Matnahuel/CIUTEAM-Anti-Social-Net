@@ -1,10 +1,11 @@
+import React from 'react';
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 
 export default function PublicRoute() {
-  const { usuario, cargando } = useAuth();
+  const { usuario, isLoading } = useAuth();
 
-  if (cargando) return <p>Cargando...</p>;
+  if (isLoading) return <p>Cargando...</p>;
 
   if (usuario) return <Navigate to="/home" replace />;
 

@@ -15,7 +15,7 @@
   padding: 30px 40px;
   color: var(--text-secondary);
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9em;
+  font-size: 0.9em; 
   text-align: center; /* Centra el texto del copyright por defecto */
   box-shadow: 0 -4px 20px var(--shadow-deep);
   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
@@ -23,8 +23,8 @@
 
 .footer-container {
   display: flex;
-  flex-direction: column; /* Siempre en columna para apilar elementos */
-  align-items: center; /* Centra los elementos horizontalmente */
+  flex-direction: column;
+  align-items: center;
   max-width: 1500px;
   margin: 0 auto;
   gap: 15px;
@@ -40,7 +40,7 @@
   display: flex;
   gap: 25px;
   flex-wrap: wrap;
-  justify-content: center; /* Centra los enlaces dentro de su contenedor */
+  justify-content: center;
 }
 
 .utility-links a {
@@ -71,8 +71,6 @@
 .utility-links a:hover::after {
   width: 100%;
 }
-
-/* --- Media Queries --- */
 
 @media (min-width: 768px) {
   .main-footer {
