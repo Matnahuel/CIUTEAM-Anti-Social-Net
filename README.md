@@ -103,32 +103,42 @@ La app permite a los usuarios registrarse, iniciar sesión, explorar publicacion
 ## 📁 Estructura del Proyecto
 
 ```
-UnaHur-Anti-Social-Net/
+CIUTEAM-ANTI-SOCIAL-NET/
+├── node_modules/
 ├── public/
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   │   ├── Footer.jsx
-│   │   ├── Header.jsx
-│   │   ├── PostCard.jsx
-│   │   ├── PrivateRoute.jsx
-│   │   └── PublicRoute.jsx
-│   ├── contexts/
-│   │   └── authContext.jsx
-│   ├── pages/
-│   │   ├── CrearPost.jsx / .css
-│   │   ├── Home.jsx / .css
-│   │   ├── Login.jsx / login.css
-│   │   ├── Register.jsx / Register.css
-│   │   ├── PostDetail.jsx / .css
-│   │   └── perfil.jsx / perfil.css
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
+│ ├── assets/
+│ ├── components/
+│ │ ├── Footer.css
+│ │ ├── Footer.jsx
+│ │ ├── Header.css
+│ │ ├── Header.jsx
+│ │ ├── PrivateRoute.jsx
+│ │ └── PublicRoute.jsx
+│ ├── contexts/
+│ │ └── authContext.jsx
+│ ├── pages/
+│ │ ├── CrearPost.css
+│ │ ├── crearPost.jsx
+│ │ ├── Home.css
+│ │ ├── home.jsx
+│ │ ├── login.css
+│ │ ├── perfil.css
+│ │ ├── perfil.jsx
+│ │ ├── PostCard.jsx
+│ │ ├── postDetail.css
+│ │ ├── PostDetail.jsx
+│ │ ├── Register.css
+│ │ └── Register.jsx
+│ ├── App.jsx
+│ ├── index.css
+│ └── main.jsx
 ├── .gitignore
-├── package.json
+├── eslint.config.js
+├── index.html
 ├── package-lock.json
-└── README.md
+├── package.json
+└── vite.config.js
 ```
 
 ---
@@ -138,7 +148,7 @@ UnaHur-Anti-Social-Net/
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/IRojas99/CIUTEAM-Anti-Social-Net
+git clone https://github.com/Matnahuel/CIUTEAM-Anti-Social-Net
 cd UnaHur-Anti-Social-Net
 ```
 
