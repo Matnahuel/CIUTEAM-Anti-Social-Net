@@ -1,159 +1,216 @@
-# UnaHur Anti-Social Net
+UnaHur Anti-Social Net
+Trabajo Práctico: Construcción de Interfaces de Usuario
+Alumnos:
 
-## Trabajo Práctico: Construcción de Interfaces de Usuario
+Ivan Rojas
 
-**Alumnos:**
-* Ivan Rojas
-* Alan Foa Rostirolla
-* Carolina Simoes
-* Matias Carabajal
-* Magali Orellana
+Alan Foa Rostirolla
 
-**Profesor/a:** Lucas Figarola
-**Materia:** Construcción de Interfaces de Usuario
-**Fecha de Entrega:** 03/07/2025
+Carolina Simoes
 
----
+Matias Carabajal
 
-## 🚀 Introducción
+Magali Orellana
 
-Este proyecto, "UnaHur Anti-Social Net", es una aplicación web desarrollada para el Trabajo Práctico de la materia Construcción de Interfaces de Usuario. Su objetivo principal es desarrollar el FrontEnd en React para la red social "UnaHur Anti-Social Net", utilizando la API proporcionada por el TP de BackEnd. La aplicación debe permitir que las personas usuarias puedan navegar publicaciones, agregar comentarios, registrarse, iniciar sesión y crear sus propios posteos.
+Profesor/a: Lucas Figarola
+Materia: Construcción de Interfaces de Usuario
+Fecha de Entrega: 03/07/2025
+
+🚀 Introducción
+Este proyecto, "UnaHur Anti-Social Net", es una aplicación web desarrollada para el Trabajo Práctico de la materia Construcción de Interfaces de Usuario. Su objetivo principal es desarrollar el FrontEnd en React para una red social, integrándose con una API de BackEnd existente. La aplicación permite a los usuarios navegar por publicaciones, agregar comentarios, registrarse, iniciar sesión y crear sus propios posteos.
 
 Hemos implementado una interfaz de usuario moderna y responsiva, buscando una experiencia de usuario intuitiva y un estilo que evoca un diseño tecnológico y moderno.
 
----
+Funcionalidades Implementadas
+La aplicación ofrece las siguientes funcionalidades clave:
 
-## Funcionalidades Requeridas
+Inicio de Sesión (Login simulado):
 
-La aplicación implementa las siguientes funcionalidades clave, según lo solicitado en el trabajo práctico:
+Permite iniciar sesión con un nickName y una contraseña fija "123456".
 
-* **Inicio de Sesión (Login simulado):**
-    * Permite iniciar sesión con un `nickName` y una contraseña fija "123456".
-    * Se realiza un `GET /users` a la API para verificar si el usuario existe y la contraseña se valida localmente.
-    * Si es válido, el usuario se guarda en un contexto global (`useContext`) y se mantiene en `localStorage`.
-    * Las rutas protegidas solo son accesibles si hay un usuario logueado.
+Verifica la existencia del usuario mediante un GET /users a la API. La contraseña se valida localmente.
 
-* **Registro de Usuario:**
-    * Formulario para crear un nuevo usuario.
-    * Se valida previamente que el `nickName` no exista.
-    * Si es válido, se envía un `POST /users` a la API.
-    * Tras el registro, se puede redirigir al login o loguear directamente al usuario.
+Si las credenciales son válidas, el usuario se guarda en un contexto global (useContext) y su sesión se mantiene en localStorage.
 
-* **Home (Página de Inicio):**
-    * Incluye un feed de publicaciones recientes que muestra:
-        * Descripción
-        * Imágenes (si las hay)
-        * Etiquetas
-        * Cantidad de comentarios visibles
-        * Botón "Ver más" que lleva a `/post/:id`.
-    * Además del feed, el contenido de la página es libre y puede incluir un Banner de bienvenida y/o una sección "Sobre nosotros" o slogans.
+Las rutas protegidas son accesibles solo si hay un usuario autenticado.
 
-* **Detalle de Publicación:**
-    * Vista accesible desde `/post/:id`.
-    * Muestra la descripción completa, imágenes, etiquetas y una lista de comentarios visibles (filtrados por la API).
-    * Dispone de un formulario para agregar un comentario nuevo (campo obligatorio), con envío mediante `POST /comments` y componente controlado (`useState`).
+Registro de Usuario:
 
-* **Perfil de Usuario:**
-    * Vista protegida, solo visible si el usuario está logueado.
-    * Muestra el `nickName` del usuario actual.
-    * Lista de publicaciones realizadas por ese usuario (consultadas a la API con su `userId`), mostrando descripción, cantidad de comentarios visibles y un botón "Ver más".
-    * También incluye un botón para cerrar sesión (`logout`).
+Formulario para crear un nuevo usuario.
 
-* **Crear Nueva Publicación:**
-    * Vista protegida, solo accesible si el usuario ha iniciado sesión.
-    * Formulario con los siguientes campos: Descripción (obligatoria), URLs de imágenes (opcional - uno o más campos), y Selección de etiquetas (lista obtenida desde la API).
-    * Al enviar, se hace un `POST /posts` con `description`, `userId` y `tags`. Si se ingresaron URLs de imágenes, por cada una se hace un `POST /postimages` con `url` y `postId`.
-    * Al finalizar, redirige al perfil o muestra confirmación.
+Valida que el nickName y el email no existan previamente.
 
----
+Si los datos son válidos, se envía un POST /users a la API.
 
-## Requisitos Técnicos
+Tras un registro exitoso, el usuario es logueado automáticamente y redirigido a la página de inicio.
 
+Home (Página de Inicio):
+
+Incluye un feed de publicaciones recientes que muestra la descripción, imágenes (si las hay), etiquetas y el conteo de comentarios.
+
+Cada publicación tiene un botón "Ver más" que redirige a la vista de detalle (/posts/:id).
+
+Incorpora una barra de búsqueda para filtrar publicaciones por etiquetas.
+
+Implementa paginación para una mejor experiencia de navegación en el feed.
+
+Presenta un banner de bienvenida y una sección "Sobre nosotros" para contextualizar la aplicación.
+
+Detalle de Publicación:
+
+Vista dedicada para cada publicación, accesible desde /posts/:id.
+
+Muestra la descripción completa del post, todas sus imágenes (con una imagen principal y miniaturas), y sus etiquetas.
+
+Presenta una lista de comentarios asociados a la publicación.
+
+Dispone de un formulario para que los usuarios logueados puedan agregar nuevos comentarios, los cuales se envían mediante un POST /comments a la API.
+
+Perfil de Usuario:
+
+Vista protegida, solo accesible para el usuario logueado.
+
+Muestra el nickName del usuario actual y permite la edición de la foto de perfil.
+
+Lista las publicaciones creadas por el usuario logueado, mostrando su descripción, imágenes, etiquetas y el conteo de comentarios.
+
+Incluye un botón para cerrar sesión (logout).
+
+Crear Nueva Publicación:
+
+Vista protegida, solo accesible si el usuario ha iniciado sesión.
+
+Formulario que permite al usuario ingresar una descripción (obligatoria), añadir múltiples URLs de imágenes (opcional) y seleccionar etiquetas existentes o crear nuevas.
+
+Al enviar, se realiza un POST /posts para crear la publicación. Si se agregaron imágenes, se envían POST /postimages adicionales para asociarlas al post.
+
+Al finalizar, el usuario es redirigido a la página de su perfil o a la vista del post recién creado.
+
+Requisitos Técnicos
 El proyecto fue desarrollado aplicando los siguientes requisitos técnicos:
 
-| Tema                | Aplicación                                   |
-| :------------------ | :------------------------------------------- |
-| `useState`, `useEffect` | Manejo de estado y carga de datos            |
-| `useContext`        | Gestión de usuario logueado                  |
-| `react-router-dom`  | Navegación entre vistas y rutas protegidas   |
-| Formularios controlados | Login, registro, comentarios, publicaciones  |
-| `Fetch` o `axios`   | Consumo de API REST                          |
-| `CSS` o framework   | Diseño responsive libre (se utilizó CSS puro) |
-| `localStorage`      | Persistencia de sesión                       |
-| Validaciones        | Formularios con campos requeridos y feedback visual |
+Tema
 
----
+Aplicación
 
-## Extras Opcionales (Bonus)
+useState, useEffect
 
-Hemos considerado o implementado los siguientes extras opcionales:
-* Paginación en la Home.
-* Animaciones suaves y transiciones en la interfaz.
+Manejo de estado de componentes y ciclo de vida, carga de datos asíncrona.
 
+useContext
 
-## Tecnologías y Dependencias
+Gestión del estado global del usuario autenticado.
 
-* **Frontend:**
-    * **React.js:** Biblioteca de JavaScript para construir interfaces de usuario.
-    * **Vite:** Herramienta de construcción rápida.
-    * **HTML5 / CSS3:** Estructura y estilos de la aplicación, con un enfoque en un diseño futurista.
-    * **React Router DOM:** Para el enrutamiento.
-* **Backend (API):**
-    * Se utiliza una API de Node.js proporcionada para el TP de BackEnd. No es necesario modificarla ni entender cómo funciona internamente, solo realizar los `fetch` necesarios desde React.
-* **Gestión de Dependencias:**
-    * **npm:** Gestor de paquetes de Node.js.
+react-router-dom
 
-## Estructura del Proyecto
+Navegación entre vistas, rutas protegidas (PrivateRoute, PublicRoute).
 
-La organización del proyecto sigue una estructura modular:
+Formularios controlados
+
+Implementación de formularios para login, registro, comentarios y creación de publicaciones.
+
+Fetch
+
+Consumo de la API REST para interactuar con el backend.
+
+CSS
+
+Diseño y estilos de la interfaz de usuario, con enfoque en la responsividad.
+
+localStorage
+
+Persistencia de la sesión del usuario entre recargas de página.
+
+Validaciones
+
+Implementación de validaciones en formularios con feedback visual al usuario.
+
+Extras Opcionales (Bonus)
+Hemos considerado e implementado los siguientes extras opcionales para mejorar la experiencia de usuario:
+
+Paginación en la Home: Mejora la navegación en el feed de publicaciones.
+
+Animaciones suaves y transiciones en la interfaz: Proporcionan una experiencia de usuario más fluida y atractiva.
+
+Tecnologías y Dependencias
+Frontend:
+
+React.js: Biblioteca de JavaScript para construir interfaces de usuario.
+
+Vite: Herramienta de construcción rápida para proyectos frontend.
+
+HTML5 / CSS3: Lenguajes base para la estructura y estilos de la aplicación, con un diseño moderno y futurista.
+
+React Router DOM: Biblioteca estándar para el enrutamiento declarativo en React.
+
+Bootstrap: Framework CSS para estilos y componentes básicos (aunque se complementa con CSS personalizado).
+
+Backend (API):
+
+Se utiliza una API de Node.js proporcionada para el Trabajo Práctico de BackEnd. No es necesario modificarla ni entender cómo funciona internamente, solo realizar las peticiones fetch necesarias desde React.
+
+Gestión de Dependencias:
+
+npm: Gestor de paquetes de Node.js, utilizado para instalar y gestionar las dependencias del proyecto.
+
+Estructura del Proyecto
+La organización del proyecto sigue una estructura modular y clara:
+
 UnaHur-Anti-Social-Net/
-├── public/
+├── public/                     # Archivos estáticos públicos (ej: index.html)
 ├── src/
-│   ├── assets/              # Contiene imágenes y otros recursos estáticos
-│   ├── components/          # Componentes reutilizables (ej: Header, Footer, PostCard)
-│   ├── contexts/            # Contextos de React para gestión de estado global (ej: AuthContext)
-│   ├── pages/               # Componentes que representan páginas completas (ej: Home, Perfil, Login, Register, CrearPost)
-│   │   ├── Home.jsx
-│   │   ├── Home.css
-│   │   ├── Perfil.jsx
-│   │   ├── Perfil.css
-│   │   ├── Login.jsx
-│   │   ├── Register.jsx
+│   ├── assets/                 # Contiene imágenes y otros recursos estáticos de la aplicación
+│   ├── components/             # Componentes React reutilizables (ej: Header, Footer, PostCard, PrivateRoute, PublicRoute)
+│   │   ├── Footer.jsx
+│   │   ├── Header.jsx
+│   │   ├── PostCard.jsx
+│   │   ├── PrivateRoute.jsx
+│   │   └── PublicRoute.jsx
+│   ├── contexts/               # Contextos de React para gestión de estado global (ej: AuthContext)
+│   │   └── authContext.jsx
+│   ├── pages/                  # Componentes que representan páginas completas de la aplicación
+│   │   ├── CrearPost.css
 │   │   ├── CrearPost.jsx
-│   │   └── ...
-│   ├── App.jsx              # Componente principal de la aplicación y configuración de rutas
-│   ├── main.jsx             # Punto de entrada de la aplicación React
-│   └── index.css            # Estilos globales y variables CSS
-├── .gitignore               # Archivos y carpetas a ignorar por Git
-├── package.json             # Metadatos del proyecto y dependencias
-├── package-lock.json        # Registro exacto de las dependencias
-└── README.md                # Este archivo
+│   │   ├── Home.css
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   ├── PostDetail.css
+│   │   ├── PostDetail.jsx
+│   │   ├── Register.css
+│   │   ├── Register.jsx
+│   │   ├── login.css           # (Nota: 'login.css' y 'Register.css' están en 'pages' pero podrían ser globales o en 'components/forms')
+│   │   └── perfil.css
+│   │   └── perfil.jsx
+│   ├── App.jsx                 # Componente principal de la aplicación y configuración de rutas
+│   ├── main.jsx                # Punto de entrada de la aplicación React (renderizado inicial)
+│   └── index.css               # Estilos globales y variables CSS de la aplicación
+├── .gitignore                  # Archivos y carpetas a ignorar por Git
+├── package.json                # Metadatos del proyecto y lista de dependencias
+├── package-lock.json           # Registro exacto de las dependencias instaladas
+└── README.md                   # Este archivo de documentación
 
-## Instalación y Ejecución Local
-
+Instalación y Ejecución Local
 Para poner en marcha el proyecto en tu máquina local, sigue los siguientes pasos:
 
-1.  **Clonar el Repositorio:**
-    ```bash
-    git clone https://github.com/IRojas99/CIUTEAM-Anti-Social-Net
-    cd UnaHur-Anti-Social-Net
-    ```
+Clonar el Repositorio:
+Abre tu terminal o línea de comandos y ejecuta:
 
+git clone https://github.com/IRojas99/CIUTEAM-Anti-Social-Net
+cd UnaHur-Anti-Social-Net
 
-2.  **Instalar Dependencias:**
-    Asegúrate de tener Node.js y npm instalados en tu sistema. Luego, instala las dependencias del proyecto:
-    ```bash
-    npm install
-    ```
+Instalar Dependencias del Frontend:
+Asegúrate de tener Node.js y npm instalados en tu sistema. Luego, desde el directorio raíz del proyecto (UnaHur-Anti-Social-Net), instala las dependencias:
 
-3.  **Configurar y Ejecutar la API (Backend):**
-    Este trabajo práctico utiliza una API ya preparada. Para correrla localmente, sigue las instrucciones del repositorio de la API:
-    **URL de la API:** [https://github.com/lucasfigarola/backend-api](https://github.com/lucasfigarola/backend-api)
-    *Generalmente, los pasos incluyen clonar ese repositorio, iniciar el servidor y cargar el seed.js (ej: `npm install` y `npm start` en el directorio de la API). Asegúrate de que el backend esté corriendo en el puerto `3001` (o el puerto configurado para la API).*
+npm install
 
-4.  **Ejecutar la Aplicación Frontend:**
-    Inicia el servidor de desarrollo del Frontend. La aplicación estará disponible en `http://localhost:5173/` (o un puerto similar).
-    ```bash
-    npm run dev
-    ```
+Configurar y Ejecutar la API (Backend):
+Este proyecto frontend requiere una API de backend para funcionar. Debes configurar y ejecutar la API por separado. Sigue las instrucciones detalladas en el repositorio de la API:
+URL del Repositorio de la API: https://github.com/lucasfigarola/backend-api
+(Generalmente, los pasos incluyen clonar ese repositorio, instalar sus dependencias (npm install), iniciar el servidor (npm start) y, si es necesario, cargar los datos iniciales (ej. un seed.js o script similar). Asegúrate de que el backend esté corriendo en el puerto 3001 o el puerto que hayas configurado para la API, ya que el frontend espera comunicarse con él en esa dirección.)
 
+Ejecutar la Aplicación Frontend:
+Una vez que el backend esté en funcionamiento, inicia el servidor de desarrollo del frontend desde el directorio UnaHur-Anti-Social-Net:
+
+npm run dev
+
+La aplicación estará disponible en tu navegador, generalmente en http://localhost:5173/ (la URL exacta se mostrará en tu terminal).
