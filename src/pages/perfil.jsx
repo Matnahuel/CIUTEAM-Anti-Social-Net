@@ -335,7 +335,7 @@ function Perfil() {
                                         onClick={() => handleReaction(post.id, 'dislike')}
                                         disabled={!usuario}
                                     >
-                                        � {post.dislikes || 0}
+                                        👎 {post.dislikes || 0}
                                     </button>
                                 </div>
                                 <Link
