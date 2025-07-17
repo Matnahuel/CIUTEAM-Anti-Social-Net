@@ -76,12 +76,6 @@ La app permite a los usuarios registrarse, iniciar sesión, explorar publicacion
 
 ---
 
-## ✨ Extras Opcionales (Bonus)
-- ✅ Paginación en Home.
-- ✅ Transiciones suaves y animaciones.
-
----
-
 ## 🛠️ Tecnologías y Dependencias
 
 ### Frontend
@@ -93,7 +87,6 @@ La app permite a los usuarios registrarse, iniciar sesión, explorar publicacion
 
 ### Backend (API)
 - API REST con **Node.js** (proporcionada por la cátedra).
-- Solo se consumen endpoints, no es necesario modificar la API.
 
 ### Gestión de Paquetes
 - **npm** para instalación y gestión de dependencias.
@@ -165,13 +158,13 @@ npm install
 Este frontend depende de una API. Cloná y ejecutá el backend desde el siguiente repositorio:
 
 📦 **Repositorio API Backend:**  
-https://github.com/lucasfigarola/backend-api
+Es una carpeta dentro del repositorio que se llama "backend-api" es una modificación de una api del profesor de la materia
 
 Pasos típicos:
 ```bash
-git clone https://github.com/lucasfigarola/backend-api
-cd backend-api
+Abrir la carpeta en una ventana del IDE
 npm install
+node seed.js
 npm start
 ```
 
@@ -182,6 +175,7 @@ La API debe estar corriendo en `http://localhost:3001/` (o el puerto configurado
 Con la API en funcionamiento, ejecutá el frontend:
 
 ```bash
+npm install
 npm run dev
 ```
 
