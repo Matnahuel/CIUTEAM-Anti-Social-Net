@@ -16,7 +16,7 @@ function App() {
   return (
     <AuthProvider>
 
-      <BrowserRouter>
+      <BrowserRouter basename="/CIUTEAM-Anti-Social-Net">
         <div className="d-flex flex-column min-vh-100">
           <Header />
           <main className="flex-grow-1 d-flex flex-column align-items-center">
