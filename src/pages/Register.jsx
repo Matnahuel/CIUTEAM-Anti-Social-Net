@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/authContext";
 import "./Register.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Link } from "react-router-dom";
+import { API_URL } from "../apiConfig";
 
 export default function Register() {
     const [nickname, setNickname] = useState("");
@@ -18,7 +19,7 @@ export default function Register() {
     useEffect(() => {
         async function obtenerUsuarios() {
             try {
-                const res = await fetch('http://localhost:3001/users')
+                const res = await fetch(`${API_URL}/users`)
                 const data = await res.json()
                 setUsers(data)
             } catch (error) {
@@ -52,7 +53,7 @@ export default function Register() {
         if (!validate()) return;
 
         try {
-            const res = await fetch("http://localhost:3001/users", {
+            const res = await fetch(`${API_URL}/users`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ nickName: nickname, email: email }),

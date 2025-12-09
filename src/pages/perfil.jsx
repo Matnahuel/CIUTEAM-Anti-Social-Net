@@ -5,7 +5,7 @@ import './perfil.css';
 import './Home.css';
 import PostCard from './PostCard';
 
-const API_URL = "http://localhost:3001";
+import { API_URL } from '../apiConfig';
 
 function Perfil() {
     const { logout, usuario, isLoading, updateCurrentUserProfile } = useAuth();

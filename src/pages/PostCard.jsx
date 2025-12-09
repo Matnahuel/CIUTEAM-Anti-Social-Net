@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './PostCard.css';
 
-const API_URL = "http://localhost:3001";
+import { API_URL } from "../apiConfig";
 const COMMENTS_PER_FETCH = 5; // Fetch 5 at a time for smoother scrolling
 
 function PostCard({ post, usuario, handleReaction }) {

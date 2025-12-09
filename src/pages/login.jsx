@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./login.css";
+import { API_URL } from "../apiConfig";
 
 export default function Login() {
     const [nickname, setNickname] = useState("");
@@ -16,7 +17,7 @@ export default function Login() {
     useEffect(() => {
         async function obtenerUsuarios() {
             try {
-                const res = await fetch('http://localhost:3001/users');
+                const res = await fetch(`${API_URL}/users`);
                 const data = await res.json();
                 setUsers(data);
             } catch (error) {

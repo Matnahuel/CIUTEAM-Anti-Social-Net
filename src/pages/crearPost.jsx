@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
 import './CrearPost.css';
 
-const API_URL = "http://localhost:3001";
+import { API_URL } from '../apiConfig';
 
 function CrearPost() {
   const { usuario, cargando } = useAuth();

@@ -1,0 +1,1 @@
+export const API_URL = 'https://ciuteam-anti-social-net.onrender.com';

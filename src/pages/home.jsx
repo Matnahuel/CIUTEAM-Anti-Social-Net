@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/authContext';
 import './Home.css';
 import PostCard from './PostCard';
 
-const API_URL = "http://localhost:3001";
+import { API_URL } from '../apiConfig';
 
 function Home() {
   const { usuario } = useAuth();
