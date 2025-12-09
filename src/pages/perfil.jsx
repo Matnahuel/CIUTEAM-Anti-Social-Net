@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/authContext';
 import './perfil.css';
+import './Home.css';
+import PostCard from './PostCard';
 
 const API_URL = "http://localhost:3001";
 
@@ -60,7 +62,7 @@ function Perfil() {
                     const images = resImg.ok ? await resImg.json() : [];
 
                     const resComments = await fetch(`${API_URL}/comments/post/${post.id}`);
-                    const comments = resComments.ok ? await resComments.json() : [];
+                    const commentData = resComments.ok ? await resComments.json() : { totalComments: 0 };
 
                     const resReactions = await fetch(`${API_URL}/reactions/post/${post.id}`);
                     let reactionData = { likes: 0, dislikes: 0, reactions: [] };
@@ -77,7 +79,7 @@ function Perfil() {
                     return {
                         ...post,
                         images: images.map((img) => img.url),
-                        Comments: comments,
+                        commentCount: commentData.totalComments,
                         likes: reactionData.likes,
                         dislikes: reactionData.dislikes,
                         myReaction: myReaction
@@ -181,31 +183,20 @@ function Perfil() {
             });
 
             if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.error || 'Error al procesar la reacción.');
+                const errorData = await res.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Error al procesar la reacción.');
             }
-
+            
             const responseData = await res.json();
-            console.log('Reacción procesada:', responseData);
 
             setUserPosts(prevPosts =>
                 prevPosts.map(p => {
                     if (p.id === postId) {
-                        let newMyReaction = p.myReaction;
-
-                        if (responseData.action === 'created') {
-                            newMyReaction = type;
-                        } else if (responseData.action === 'updated') {
-                            newMyReaction = type;
-                        } else if (responseData.action === 'deleted') {
-                            newMyReaction = null;
-                        }
-
                         return {
                             ...p,
                             likes: responseData.newLikes,
                             dislikes: responseData.newDislikes,
-                            myReaction: newMyReaction
+                            myReaction: responseData.myReaction
                         };
                     }
                     return p;
@@ -297,7 +288,7 @@ function Perfil() {
             </div>
 
             <div className="perfil-posts-section">
-                <h3>Tus Publicaciones</h3>
+                <h2>Tus Publicaciones</h2>
                 <div className="perfil-posts">
                     {loadingPosts ? (
                         <p className="loading-message">Cargando tus publicaciones...</p>
@@ -305,46 +296,12 @@ function Perfil() {
                         <p className="error-message">{errorPosts}</p>
                     ) : userPosts.length > 0 ? (
                         userPosts.map(post => (
-                            <div key={post.id} className="perfil-post-item">
-                                <h3>{post.title || post.description}</h3> 
-                                {post.images && post.images.length > 0 && (
-                                    <img 
-                                        src={post.images[0]}
-                                        alt={post.title || post.description} 
-                                        className="perfil-post-image-full" 
-                                        onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/300x200/555555/FFFFFF?text=Imagen+no+disponible'; }}
-                                    />
-                                )}
-                                <p>{post.content || post.description}</p> 
-                                <div className="perfil-post-tags">
-                                    {post.Tags && post.Tags.map((tag) => (
-                                        <span key={tag.id} className="perfil-post-tag">#{tag.name}</span>
-                                    ))}
-                                </div>
-                                <p className="perfil-post-comments">Comentarios: {post.Comments ? post.Comments.length : 0}</p>
-                                <div className="post-reactions">
-                                    <button
-                                        className={`reaction-button like-button ${post.myReaction === 'like' ? 'active' : ''}`}
-                                        onClick={() => handleReaction(post.id, 'like')}
-                                        disabled={!usuario}
-                                    >
-                                        👍 {post.likes || 0}
-                                    </button>
-                                    <button
-                                        className={`reaction-button dislike-button ${post.myReaction === 'dislike' ? 'active' : ''}`}
-                                        onClick={() => handleReaction(post.id, 'dislike')}
-                                        disabled={!usuario}
-                                    >
-                                        👎 {post.dislikes || 0}
-                                    </button>
-                                </div>
-                                <Link
-                                    to={`/posts/${post.id}`}
-                                    className="ver-mas-button"
-                                >
-                                    Ver más
-                                </Link>
-                            </div>
+                            <PostCard
+                                key={post.id}
+                                post={post}
+                                usuario={usuario}
+                                handleReaction={handleReaction}
+                            />
                         ))
                     ) : (
                         <p className="no-posts-message">No tienes publicaciones aún.</p>

@@ -10,9 +10,11 @@ function CrearPost() {
   const navigate = useNavigate();
 
   const [description, setDescription] = useState('');
-  const [images, setImages] = useState([]);
-  const [newImageUrl, setNewImageUrl] = useState('');
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [tags, setTags] = useState([]);
+  const fileInputRef = React.useRef(null);
+  
   const [selectedTagIds, setSelectedTagIds] = useState([]);
   const [newTagInput, setNewTagInput] = useState('');
   const [error, setError] = useState('');
@@ -27,30 +29,42 @@ function CrearPost() {
   }, [usuario, cargando, navigate]);
 
   useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const res = await fetch(`${API_URL}/tags`);
-        if (!res.ok) throw new Error('Error al cargar las etiquetas');
-        const data = await res.json();
-        setTags(data);
-      } catch (err) {
-        console.error('Error al cargar etiquetas:', err);
-        setError('No se pudieron cargar las etiquetas existentes.');
-      }
+    // Limpieza de Object URLs para evitar memory leaks
+    return () => {
+      imagePreviews.forEach(url => URL.revokeObjectURL(url));
     };
-    fetchTags();
-  }, []);
+  }, [imagePreviews]);
 
-  const handleAddImage = (e) => {
-    e.preventDefault();
-    if (newImageUrl.trim() && !images.includes(newImageUrl.trim())) {
-      setImages([...images, newImageUrl.trim()]);
-      setNewImageUrl('');
-    }
+  const handleTriggerFileInput = () => {
+    fileInputRef.current.click();
   };
 
-  const handleRemoveImage = (urlToRemove) => {
-    setImages(images.filter(url => url !== urlToRemove));
+  const handleImageSelect = (event) => {
+    const files = Array.from(event.target.files);
+    if (files.length === 0) return;
+
+    // Filtrar archivos que no son imágenes (seguridad adicional en el frontend)
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
+    if(imageFiles.length !== files.length){
+      setError('Solo se admiten archivos de imagen.');
+    }
+
+    const newFiles = [...selectedFiles, ...imageFiles];
+    setSelectedFiles(newFiles);
+
+    const newPreviews = imageFiles.map(file => URL.createObjectURL(file));
+    setImagePreviews(prev => [...prev, ...newPreviews]);
+    
+    // Limpiar el input para permitir seleccionar el mismo archivo de nuevo
+    event.target.value = null; 
+  };
+  
+  const handleRemoveImage = (indexToRemove) => {
+    // Revocar el Object URL para liberar memoria
+    URL.revokeObjectURL(imagePreviews[indexToRemove]); 
+    
+    setImagePreviews(prev => prev.filter((_, index) => index !== indexToRemove));
+    setSelectedFiles(prev => prev.filter((_, index) => index !== indexToRemove));
   };
 
   const handleToggleTag = (tagId) => {
@@ -101,34 +115,47 @@ function CrearPost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!description.trim()) {
+      setError('La descripción del post no puede estar vacía.');
+      return;
+    }
+    if (!usuario) {
+      setError('Debes iniciar sesión para crear un post.');
+      return;
+    }
+    
     setError('');
     setSuccessMessage('');
     setIsSubmitting(true);
 
-    if (!usuario) {
-      setError('Debes iniciar sesión para crear un post.');
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (!description.trim()) {
-      setError('La descripción del post no puede estar vacía.');
-      setIsSubmitting(false);
-      return;
-    }
-
     try {
+      // 1. Subir todas las imágenes seleccionadas en paralelo
+      const uploadPromises = selectedFiles.map(file => {
+        const formData = new FormData();
+        formData.append('image', file);
+        return fetch(`${API_URL}/api/upload`, {
+          method: 'POST',
+          body: formData,
+        }).then(res => {
+          if (!res.ok) throw new Error('Error al subir una imagen.');
+          return res.json();
+        });
+      });
+
+      const uploadedImages = await Promise.all(uploadPromises);
+      const imageUrls = uploadedImages.map(img => img.imageUrl);
+
+      // 2. Crear el post con los datos y las URLs de las imágenes
       const postData = {
         description: description.trim(),
         userId: usuario.id,
         tagIds: selectedTagIds,
+        imageUrls: imageUrls,
       };
 
       const res = await fetch(`${API_URL}/posts`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(postData),
       });
 
@@ -139,29 +166,20 @@ function CrearPost() {
 
       const newPost = await res.json();
 
-      for (const url of images) {
-        if (url.trim()) {
-          await fetch(`${API_URL}/postimages`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              url: url.trim(),
-              postId: newPost.id,
-            }),
-          });
-        }
-      }
-
+      // 3. Limpiar el formulario y mostrar mensaje de éxito
       setSuccessMessage('¡Publicación creada con éxito!');
       setDescription('');
-      setImages([]);
-      setNewImageUrl('');
+      setSelectedFiles([]);
+      setImagePreviews([]);
       setSelectedTagIds([]);
       setNewTagInput('');
       setShowTagsSection(false);
 
+      // 4. Redirigir al nuevo post después de un momento
       setTimeout(() => {
-        navigate(`/posts/${newPost.id}`);
+        // Redirigir a la vista del post individual si existe, si no a home.
+        // Asumiendo que la navegación a un post es `/posts/${newPost.id}`
+        navigate(newPost.id ? `/posts/${newPost.id}` : '/');
       }, 1500);
 
     } catch (err) {
@@ -199,32 +217,30 @@ function CrearPost() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="imageUrl">Añadir Imágenes (URL)</label>
-            <div className="image-input-group">
-              <input
-                type="url"
-                id="imageUrl"
-                value={newImageUrl}
-                onChange={(e) => setNewImageUrl(e.target.value)}
-                placeholder="Pega la URL de la imagen aquí (ej: https://ejemplo.com/imagen.jpg)"
-              />
-              <button
-                type="button"
-                onClick={handleAddImage}
-                className="add-button"
-                disabled={!newImageUrl.trim()}
-              >
-                + Añadir
-              </button>
-            </div>
-            {images.length > 0 && (
+            <label>Añadir Imágenes</label>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageSelect}
+              multiple
+              accept="image/png, image/jpeg, image/gif"
+              style={{ display: 'none' }}
+            />
+            <button
+              type="button"
+              onClick={handleTriggerFileInput}
+              className="add-button"
+            >
+              + Agregar imagenes
+            </button>
+            {imagePreviews.length > 0 && (
               <div className="image-previews">
-                {images.map((url, index) => (
+                {imagePreviews.map((url, index) => (
                   <div key={index} className="image-preview-item">
                     <img src={url} alt={`Preview ${index}`} className="image-thumbnail" />
                     <button
                       type="button"
-                      onClick={() => handleRemoveImage(url)}
+                      onClick={() => handleRemoveImage(index)}
                       className="remove-image-button"
                     >
                       X

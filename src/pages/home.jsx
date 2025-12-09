@@ -46,38 +46,27 @@ function Home() {
     try {
       const res = await fetch(`${API_URL}/reactions`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: usuario.id, postId, type }),
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || 'Error al procesar la reacción.');
+        const errorData = await res.json().catch(() => ({})); // Intenta parsear JSON, si falla, usa objeto vacío
+        throw new Error(errorData.message || 'Error al procesar la reacción.');
       }
-
+      
+      // El backend ahora devuelve los recuentos actualizados y la reacción del usuario
       const responseData = await res.json();
-      console.log('Reacción procesada:', responseData);
 
       setPosts(prevPosts =>
         prevPosts.map(p => {
           if (p.id === postId) {
-            let newMyReaction = p.myReaction;
-
-            if (responseData.action === 'created') {
-              newMyReaction = type;
-            } else if (responseData.action === 'updated') {
-              newMyReaction = type;
-            } else if (responseData.action === 'deleted') {
-              newMyReaction = null;
-            }
-
+            // Actualiza el post específico con la nueva información
             return {
               ...p,
               likes: responseData.newLikes,
               dislikes: responseData.newDislikes,
-              myReaction: newMyReaction
+              myReaction: responseData.myReaction
             };
           }
           return p;
@@ -101,32 +90,24 @@ function Home() {
         }
         const postsApi = await resPosts.json();
 
+        // TODO: The images and comments fetching should be optimized.
+        // This is a temporary solution to avoid the N+1 query problem.
         const postsConDataAdicional = await Promise.all(
           postsApi.map(async (post) => {
             const resImg = await fetch(`${API_URL}/postimages/post/${post.id}`);
             const images = resImg.ok ? await resImg.json() : [];
 
-            const resComments = await fetch(`${API_URL}/comments/post/${post.id}`);
-            const comments = resComments.ok ? await resComments.json() : [];
+            const resComments = await fetch(`${API_URL}/comments/post/${post.id}?limit=1`);
+            const commentData = resComments.ok ? await resComments.json() : { totalComments: 0 };
 
-            const resReactions = await fetch(`${API_URL}/reactions/post/${post.id}`);
-            let reactionData = { likes: 0, dislikes: 0, reactions: [] };
-            if (resReactions.ok) {
-                reactionData = await resReactions.json();
-            } else {
-                console.warn(`No se pudieron cargar reacciones para el post ${post.id}`);
-            }
-
-            const myReaction = usuario
-              ? reactionData.reactions.find(r => r.UserId === usuario.id)?.type || null
+            const myReaction = usuario && post.Reactions
+              ? post.Reactions.find(r => r.UserId === usuario.id)?.type || null
               : null;
 
             return {
               ...post,
               images: images.map((img) => img.url),
-              Comments: comments,
-              likes: reactionData.likes,
-              dislikes: reactionData.dislikes,
+              commentCount: commentData.totalComments,
               myReaction: myReaction
             };
           })

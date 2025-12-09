@@ -747,3 +747,126 @@ body {
     box-shadow: none;
     transform: none;
 }
+
+/* Card Carousel Styles */
+.post-card-carousel {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.post-card-carousel .post-image {
+    width: 100%;
+    height: 250px; /* Consistent height for carousel images */
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+}
+
+.post-card-carousel .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px 5px;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+    opacity: 0;
+}
+
+.post-card-carousel:hover .carousel-button {
+    opacity: 1;
+}
+
+.post-card-carousel .carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.post-card-carousel .carousel-button.prev {
+    left: 10px;
+}
+
+.post-card-carousel .carousel-button.next {
+    right: 10px;
+}
+
+/* STYLES FOR POST CARD COMMENTS */
+.post-comments-toggle {
+  background: none;
+  border: none;
+  color: var(--accent-blue);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.9em;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.post-comments-toggle:hover{
+    color: #007bff;
+}
+
+.post-card-comments-section {
+  margin-top: 15px;
+  padding: 10px;
+  padding-right: 5px; /* Space for scrollbar */
+  border-top: 1px solid var(--border-subtle);
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.post-card-comment {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  padding: 8px;
+  border-left: 3px solid var(--accent-blue);
+  background-color: rgba(0, 163, 204, 0.05);
+  border-radius: 4px;
+}
+
+.post-card-comment strong {
+  margin-right: 5px;
+  color: var(--text-primary);
+}
+
+.post-card-comment p {
+  display: inline;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.no-more-comments {
+    font-size: 0.8em;
+    text-align: center;
+    color: #888;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.loading-message {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 10px;
+}
+
+/* Custom Scrollbar for Comments Box */
+.post-card-comments-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.post-card-comments-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.post-card-comments-section::-webkit-scrollbar-thumb {
+  background-color: var(--accent-grey);
+  border-radius: 10px;
+  border: 2px solid rgba(0,0,0,0.2);
+}

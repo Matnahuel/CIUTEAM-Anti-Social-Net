@@ -9,7 +9,7 @@ import CrearPost from './pages/crearPost.jsx';
 import Profile from './pages/perfil.jsx';
 import Footer from './components/Footer.jsx';
 import Header from './components/Header.jsx';
-import PostDetail from './pages/PostDetail.jsx';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/crear-post" element={<CrearPost />} />
                 <Route path="/perfil" element={<Profile />} />
-                <Route path="/posts/:id" element={<PostDetail />} />
+
               </Route>
             </Routes>
           </main>
